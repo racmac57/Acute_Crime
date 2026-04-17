@@ -1,0 +1,30 @@
+# Data files — large binaries, exports, PII-adjacent
+Data/cad/
+Data/rms/
+Data/summons/
+Data/timereport/
+Data/city_ord/
+Data/nibrs/
+Data/*.pdf
+
+# Keep the DV blocklist (PII-safe, 3 columns only)
+!Data/dv_case_numbers_for_t4.csv
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# Temp / scratch
+*.tmp
+*.bak

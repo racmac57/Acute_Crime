@@ -1,13 +1,15 @@
 {
   "last_active_file": {
-    "path": "C:\\Users\\carucci_r\\OneDrive - City of Hackensack\\10_Projects\\Acute_Crime\\Scripts\\t4\\type_fallback.py",
-    "section": "__main__ standalone test block (lines ~118-149); flag_dv_by_type / is_dv_type"
+    "path": "C:\\Users\\carucci_r\\OneDrive - City of Hackensack\\10_Projects\\Acute_Crime\\Docs\\deliverables\\T4_C01W02_top5_hotspots_citywide.html",
+    "section": "T4 top-5 deliverable; address/weighting caveats"
   },
-  "last_completed_task": "Pushed origin/main through commit 273042c (cycle ID strategy, RMS defaults, Feb 2026 RMS 539 KB docs). DV blocklist path Data/dv_case_numbers_for_t4.csv documented.",
-  "next_task_in_progress_or_queued": "Push commit after review; optional — add Output/ to operator workflow or archive scored runs off-repo.",
+  "last_completed_task": "Top-5 hotspots HTML+CSV; export_top5_hotspots_html.py; Sandbox dv_doj arcgis_exports copied to Imported_from_sandbox (gitignored); CAD 2024/2025 yearly disposition review; CAD cleaning engine vs cad_rms_data_quality disposition alignment documented.",
+  "next_task_in_progress_or_queued": "Optional: CAD disposition weighting for Tier 1; CAD_Data_Cleaning_Engine Sandbox→OneDrive sync per handoff prompt; validate-monthly on T4 CAD/RMS window.",
   "unresolved_errors_warnings_decisions": [
-    "Operator decision: calendar file vs Section 0-only cycle_id per Docs/t4_cycle_id_strategy.md if Tier 2 automation is required.",
-    "score_integration uses fixed PATHS in module (PROJECT OneDrive path); override flags not implemented — use repo root layout or edit PATHS for other machines."
+    "2024_CAD_ALL: ~6% empty disposition vs ~0.15% for 2025 — affects disposition-based rules on 2024 pulls.",
+    "Tier 1 scoring ignores disposition until implemented; cad_rms_data_quality DispositionValidator + enhanced_esri mapping are upstream integration targets.",
+    "score_integration PATHS hardcoded to OneDrive Acute_Crime — add CLI overrides if running elsewhere.",
+    "Imported_from_sandbox/dv_doj_arcgis_exports local only — repair data sources in Pro if paths point to Sandbox."
   ],
   "plan_todos": {
     "confirm-rms-source": "completed",
@@ -15,5 +17,6 @@
     "type-fallback": "completed",
     "score-integration": "completed",
     "refresh-governance": "completed"
-  }
+  },
+  "related_repos_note": "cad_rms_data_quality: DispositionValidator. CAD_Data_Cleaning_Engine: full engine in C:\\_Sandbox\\02_ETL_Scripts\\; OneDrive mirror may be incomplete — see handoff_20260417_end_of_day.md"
 }

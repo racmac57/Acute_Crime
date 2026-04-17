@@ -1,0 +1,17 @@
+{
+  "generated_at": "2026-04-17T06:18:57",
+  "source_aprx": "C:\\Users\\carucci_r\\OneDrive - City of Hackensack\\10_Projects\\Acute_Crime\\Imported_from_sandbox\\dv_doj_arcgis_exports\\dv_incidents_arcgis_ready\\dv_doj\\dv_doj.aprx",
+  "pro_version": "3.6.1",
+  "exported_layer_count": 4,
+  "skipped_layer_count": 5,
+  "error_layer_count": 0,
+  "map_count": 1,
+  "layout_count": 8,
+  "shortlist_candidates_by_name_hint": [
+    {
+      "map_name": "Map",
+      "layer_name": "Priority Intervention Zones (95%+ Confidence)",
+      "lyrx": "Map__Priority_Intervention_Zones__95___Confidence_.lyrx"
+    }
+  ]
+}

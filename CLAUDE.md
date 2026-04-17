@@ -4,7 +4,7 @@ This file is the complete agent-ready reference for the T4 Hotspot Analysis syst
 
 **Project owner:** R. A. Carucci #261, Principal Analyst — Safe Streets Operations Control Center (SSOCC), Hackensack Police Department, NJ.
 
-**Last updated:** 2026-04-16
+**Last updated:** 2026-04-17
 
 > **Filename note:** The Master Prompt references `T4_Master.xlsx`. The operational file on disk is **`T4_Master_Reporting_Template.xlsx`** (full path in §3 External Dependencies). Both names refer to the same cycle-definition workbook. Prose references to `T4_Master.xlsx` in this file follow the master prompt's naming convention; scripts must use the actual filename.
 
@@ -23,6 +23,8 @@ T4 Hotspot Analysis is a production-grade, cycle-aligned crime analysis pipeline
 **Design:** Complete (Master Prompt v3 + DV Exclusion Plan + [Docs/t4_cycle_id_strategy.md](Docs/t4_cycle_id_strategy.md)).
 **Implementation:** Scoring engine not built; **closed decisions:** cycle IDs (Section 0), canonical RMS default (local `Data/rms/` vs AGOL — [Docs/t4_config_and_aliases.md](Docs/t4_config_and_aliases.md)), DV blocklist at `Data/dv_case_numbers_for_t4.csv`.
 **Data:** CAD/RMS layouts under `Data/`; **`dv_case_numbers_for_t4.csv`** through 2026-04-16; refresh per [Docs/dv_blocklist_refresh_governance.md](Docs/dv_blocklist_refresh_governance.md).
+**ArcGIS Operationalization (2026-04-17):** Style transfer from `dv_doj.aprx` into `T4_2026_ArcGIS` validated 4/4 PASS. `T4 Persistent Hotspots (All Cycles)` layer geocoded and loaded (10 locations, graduated color by `persistent_risk_score`). ArcPy scripts for layer reconnect and hotspot loading are committed under `Scripts/t4/arcgis/`. Methodology summary HTML deliverable added to `Docs/deliverables/`.
+**Briefing package (2026-04-17):** Map companion HTML files, methodology summary, command-staff brief, verbal brief, and next-cycle checklist are committed and pushed to `origin/main`.
 
 ---
 
@@ -551,6 +553,19 @@ Append a Data Quality Note to every output:
 - Precursor-pattern layer (CAD→RMS linkages, Primary vs. Extended color-coded)
 - Displacement check layer (prior-cycle Diminishing + 3-block radius ring)
 
+### ArcPy Automation Scripts (`Scripts/t4/arcgis/`)
+
+| Script | Purpose |
+|--------|---------|
+| `load_t4_hotspots.py` | Geocodes `T4_persistent_hotspots_citywide.csv`, creates `T4_Persistent_Hotspots` FC in project GDB, adds layer to map with graduated-color symbology by `persistent_risk_score`. Re-run safe. |
+| `reconnect_layers.py` | Diagnoses and repairs broken data-source paths in `T4_2026_ArcGIS.aprx` when the project is opened on a machine where the source GDB path differs (e.g., after moving from desktop temp path to OneDrive). |
+| `export_layer_styles.py` | Exports `.lyrx` style files and inventory JSON from source APRX. |
+| `apply_layer_styles.py` | Applies styles from source APRX (with `.lyrx` fallback) to target operational map. |
+| `validate_layer_styles.py` | Validates style parity between source and target layers. |
+| `run_monthly_style_sop.py` | Single-run monthly SOP: export → apply → validate in sequence. |
+
+**Run context:** All scripts support `CURRENT` project (ArcGIS Pro Python window) as primary; fall back to explicit APRX path for standalone execution.
+
 ### ArcGIS Online Publishing
 
 1. Export final scored feature class to File GDB (`T4_Hotspots_[cycle_id].gdb`)
@@ -632,6 +647,8 @@ All implementation work is tracked here. Do not mark any TODO complete until cod
 - **T4 Master workbook** — inspected 2026-04-16. `ReportName` column contains only `T4_Current`, not structured `T4_C01W02` cycle IDs. Cycle ID generation must be built into pipeline code or sourced from a separate cycle calendar. See §4a for full sheet/column inventory.
 - **DV roster actual end date** — `dv_final_enriched.csv` data ends **2025-10-29** (not 2025-12-31 as `ValidationConfig` implies). Gap is ~6 months to present. Regenerate `backfill_dv` before any T4 run.
 - **T4 Master column names use spaces** — `How Reported`, `Time of Call`, etc. — not the camelCase in the master prompt. Snake_case normalization must handle both.
+- **ArcGIS layer sources (laptop)** — `T4_2026_ArcGIS.aprx` layers point to `C:\TEMP\DV_Analysis\dv_doj.gdb\` (desktop temp path). On the laptop, the GDB exists at `Imported_from_sandbox\dv_doj_arcgis_exports\dv_incidents_arcgis_ready\dv_doj\dv_doj.gdb` but may be OneDrive online-only. Run `Scripts/t4/arcgis/reconnect_layers.py` after GDB syncs to repair. `T4 Persistent Hotspots (All Cycles)` layer is already connected via `T4_2026_ArcGIS.gdb` and is unaffected.
+- **`.lyrx` export unreliable** — `ApplySymbologyFromLayer` against exported `.lyrx` returns `ERROR 000229` in this environment. Source-APRX fallback logic in `apply_layer_styles.py` is the approved workaround (validated 4/4 PASS).
 
 ---
 

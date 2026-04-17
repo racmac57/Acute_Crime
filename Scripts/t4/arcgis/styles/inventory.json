@@ -1,0 +1,142 @@
+{
+  "source_aprx": "C:\\Users\\carucci_r\\OneDrive - City of Hackensack\\10_Projects\\Acute_Crime\\Imported_from_sandbox\\dv_doj_arcgis_exports\\dv_incidents_arcgis_ready\\dv_doj\\dv_doj.aprx",
+  "pro_version": "3.6.1",
+  "generated_at": "2026-04-17T06:18:57",
+  "maps": [
+    {
+      "name": "Map",
+      "spatial_ref": "GCS_WGS_1984",
+      "layers": [
+        {
+          "name": "Lables_Nov2020",
+          "skipped": "group/basemap/web",
+          "is_group_layer": true,
+          "is_basemap_layer": false,
+          "is_web_layer": false
+        },
+        {
+          "name": "Lables_Nov2020",
+          "skipped": "group/basemap/web",
+          "is_group_layer": false,
+          "is_basemap_layer": false,
+          "is_web_layer": true
+        },
+        {
+          "name": "Domestic Violence Incidents (2023 - 2025)",
+          "is_feature_layer": true,
+          "is_raster_layer": false,
+          "supports_symbology": true,
+          "show_labels": false,
+          "definition_query": "",
+          "data_source": "C:\\TEMP\\DV_Analysis\\dv_doj.gdb\\DV_Incidents_Within_City",
+          "lyrx": "Map__Domestic_Violence_Incidents__2023_-_2025_.lyrx",
+          "error": null
+        },
+        {
+          "name": "Statistically Significant Hot Spots",
+          "is_feature_layer": true,
+          "is_raster_layer": false,
+          "supports_symbology": true,
+          "show_labels": false,
+          "definition_query": "",
+          "data_source": "C:\\TEMP\\DV_Analysis\\dv_doj.gdb\\DV_Hotspot_Analysis",
+          "lyrx": "Map__Statistically_Significant_Hot_Spots.lyrx",
+          "error": null
+        },
+        {
+          "name": "Priority Intervention Zones (95%+ Confidence)",
+          "is_feature_layer": true,
+          "is_raster_layer": false,
+          "supports_symbology": true,
+          "show_labels": false,
+          "definition_query": "",
+          "data_source": "C:\\TEMP\\DV_Analysis\\dv_doj.gdb\\DV_Intervention_Zones_95pct_Polygons",
+          "lyrx": "Map__Priority_Intervention_Zones__95___Confidence_.lyrx",
+          "error": null
+        },
+        {
+          "name": "Community-Reported Domestic Violence Incidents",
+          "is_feature_layer": true,
+          "is_raster_layer": false,
+          "supports_symbology": true,
+          "show_labels": false,
+          "definition_query": "",
+          "data_source": "C:\\TEMP\\DV_Analysis\\dv_doj.gdb\\DV_Incidents_Exclude_HPD_HQ",
+          "lyrx": "Map__Community-Reported_Domestic_Violence_Incidents.lyrx",
+          "error": null
+        },
+        {
+          "name": "City_Border",
+          "skipped": "group/basemap/web",
+          "is_group_layer": false,
+          "is_basemap_layer": false,
+          "is_web_layer": true
+        },
+        {
+          "name": "Light Gray Reference",
+          "skipped": "group/basemap/web",
+          "is_group_layer": false,
+          "is_basemap_layer": true,
+          "is_web_layer": false
+        },
+        {
+          "name": "Light Gray Base",
+          "skipped": "group/basemap/web",
+          "is_group_layer": false,
+          "is_basemap_layer": true,
+          "is_web_layer": false
+        }
+      ]
+    }
+  ],
+  "layouts": [
+    {
+      "name": "DV Tactical Intelligence Briefing",
+      "page_w_in": 11.0,
+      "page_h_in": 8.5,
+      "units": "INCH"
+    },
+    {
+      "name": "DV Intervention Zones - Executive Statistics",
+      "page_w_in": 11.0,
+      "page_h_in": 8.5,
+      "units": "INCH"
+    },
+    {
+      "name": "DV Executive Summary - One Page",
+      "page_w_in": 8.5,
+      "page_h_in": 11.0,
+      "units": "INCH"
+    },
+    {
+      "name": "Overview",
+      "page_w_in": 11.0,
+      "page_h_in": 8.5,
+      "units": "INCH"
+    },
+    {
+      "name": "Intervention Zone One",
+      "page_w_in": 8.5,
+      "page_h_in": 11.0,
+      "units": "INCH"
+    },
+    {
+      "name": "Intervention Zone Two",
+      "page_w_in": 8.5,
+      "page_h_in": 11.0,
+      "units": "INCH"
+    },
+    {
+      "name": "Intervention Zone Three",
+      "page_w_in": 8.5,
+      "page_h_in": 11.0,
+      "units": "INCH"
+    },
+    {
+      "name": "Intervention Zones Four",
+      "page_w_in": 8.5,
+      "page_h_in": 11.0,
+      "units": "INCH"
+    }
+  ]
+}

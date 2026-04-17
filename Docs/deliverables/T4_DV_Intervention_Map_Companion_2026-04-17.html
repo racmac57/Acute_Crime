@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T4 DV Intervention Map Companion - HPD SSOCC</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;font-size:13.5px;color:#1a1a2e;background:#f5f5f0;padding:40px 20px}
+.page{max-width:900px;margin:0 auto;background:#fff;border:1px solid #ccc;box-shadow:0 2px 12px rgba(0,0,0,.12)}
+.header{background:#1a2744;color:#fff;padding:28px 24px 22px;border-bottom:4px solid #c8a84b}
+.header .dept{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#c8a84b;margin-bottom:6px}
+.header h1{font-size:20px;font-weight:700;line-height:1.3;margin-bottom:4px}
+.header .subtitle{font-size:12px;color:#b0b8cc;font-style:italic}
+.meta-bar{background:#eef0f5;border-bottom:1px solid #d0d4de;padding:14px 24px;display:flex;gap:40px;font-size:11.5px;color:#444;flex-wrap:wrap}
+.meta-bar span strong{color:#1a2744}.status-les{color:#b71c1c;font-weight:700;letter-spacing:.5px}
+.content{padding:32px 24px 40px}
+h2{font-size:15px;font-weight:700;color:#1a2744;text-transform:uppercase;letter-spacing:1px;border-bottom:2px solid #c8a84b;padding-bottom:5px;margin:28px 0 14px}
+h2:first-of-type{margin-top:0}
+h3{font-size:13px;font-weight:700;color:#1a2744;margin:18px 0 8px}
+p{line-height:1.4;margin-bottom:12px;color:#2c2c3e}
+ul,ol{margin:0 0 12px 22px;color:#2c2c3e;line-height:1.5;font-size:13px}
+li{margin-bottom:4px}
+.alert{background:#fff8e6;border-left:4px solid #c8a84b;padding:14px 18px;margin:16px 0;border-radius:0 4px 4px 0}
+.alert.green{background:#f0faf2;border-left-color:#2e7d32}
+.alert.red{background:#fff0f0;border-left-color:#b71c1c}
+.alert p{margin:0;font-size:13px}.alert strong{color:#1a2744}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:14px 0 20px}
+th{background:#1a2744;color:#fff;padding:9px 12px;text-align:center;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+td{padding:8px 12px;border-bottom:1px solid #e8e8ee;vertical-align:top}
+tr:nth-child(even) td{background:#f7f8fb}
+.panels{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0 20px}
+.panel{border:1px solid #d0d4de;border-radius:4px;padding:12px;background:#fafbfd}
+.panel h3{margin:0 0 8px 0;font-size:12px;color:#1a2744;text-transform:uppercase;letter-spacing:.6px;border-left:3px solid #c8a84b;padding-left:7px}
+.shot-wrap{border:2px dashed #9aa3bd;border-radius:4px;height:150px;background:#0f1320;overflow:hidden;margin-bottom:8px}
+.shot-img{width:100%;height:100%;object-fit:contain;display:block}
+.guidance{font-size:11px;color:#555;font-style:italic;margin:0 0 8px 0;line-height:1.35}
+.notes{background:#fff;border:1px solid #d0d4de;border-radius:3px;padding:6px 9px}
+.notes strong{color:#1a2744;font-size:10px;text-transform:uppercase;letter-spacing:.5px}
+.notes ul{margin:4px 0 0 16px;font-size:11px;color:#555}
+.checklist{list-style:none;padding:0;margin:10px 0 16px;font-size:12.5px}
+.checklist li{padding:5px 0 5px 24px;position:relative;border-bottom:1px dotted #d0d4de;color:#2c2c3e}
+.checklist li:before{content:"";position:absolute;left:0;top:7px;width:13px;height:13px;border:1.5px solid #1a2744;border-radius:2px;background:#fff}
+.signoff-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 24px;margin-top:10px;font-size:12.5px}
+.signoff-grid .field{border-bottom:1px solid #9aa3bd;padding:4px 0;min-height:22px;color:#2c2c3e}
+.signoff-grid label{display:block;font-weight:600;color:#1a2744;font-size:11px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
+.signoff-grid .full{grid-column:1/-1}
+.footer{background:#eef0f5;border-top:2px solid #1a2744;padding:12px 24px;font-size:10.5px;color:#666;line-height:1.6}
+@page{size:letter portrait;margin:18mm 16mm}
+@media print{body{background:#fff;padding:0}.page{box-shadow:none;border:none;max-width:100%}.footer{font-size:9px;padding:8px 24px;line-height:1.3}.panels{grid-template-columns:1fr;gap:8px}.shot-wrap{height:190px}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <div class="dept">City of Hackensack | Police Department | Safe Streets Operations Control Center</div>
+    <h1>T4 DV Intervention Map Companion</h1>
+    <div class="subtitle">Operational companion document for the T4 DV Intervention map overlay | Command staff and SSOCC operators</div>
+  </div>
+  <div class="meta-bar">
+    <span><strong>Prepared by:</strong> R. A. Carucci #261, Principal Analyst | Safe Streets Operations Control Center | Hackensack Police Department</span>
+    <span><strong>Run Date / Time:</strong> 04/17/2026 2:38 PM</span>
+    <span><strong>Operator:</strong> R. A. Carucci #261</span>
+    <span><strong>Classification:</strong> <span class="status-les">Law Enforcement Sensitive</span></span>
+  </div>
+  <div class="content">
+    <h2>Executive Snapshot</h2>
+    <div class="alert"><p><strong>Purpose:</strong> Focus T4 DV intervention effort on the highest-risk, persistently active zones. Tiering drives resource allocation; downtrend does not remove a zone until validated. Top 50 persistent hotspots combined with 95%+ priority zones form the operational overlay. Community-reported incidents augment CAD/RMS signal but do not, on their own, tier a zone.</p></div>
+    <h2>How to Read This Map</h2>
+    <ol><li>Start with the citywide view to confirm cluster geography and district coverage.</li><li>Cross-reference Priority Intervention Zones (95%+) against Persistent Hotspots (Top 50).</li><li>Treat overlap of both layers as the strongest intervention signal.</li><li>Use Community-Reported Incidents as corroborating context only.</li><li>Verify District (Posts) and Beat alignment before tasking.</li></ol>
+    <h2>Legend Interpretation</h2>
+    <table><thead><tr><th style="text-align:left;width:38%">Layer</th><th style="text-align:left">Operational Meaning</th></tr></thead><tbody><tr><td>T4 Persistent Hotspots (Top 50)</td><td>Locations with sustained DV activity across multiple cycles. Strongest candidate for directed patrol and follow-up.</td></tr><tr><td>T4 Priority Intervention Zones (95%+)</td><td>Zones exceeding the 95th percentile risk threshold for the current cycle. Primary tasking targets.</td></tr><tr><td>T4 Community-Reported Incidents</td><td>Non-CAD sourced signals. Used for context and corroboration, not standalone tiering.</td></tr><tr><td>T4 Incidents Within City (Reference)</td><td>All in-city DV incidents for the cycle. Provides denominator and coverage reference.</td></tr><tr><td>District (Posts)</td><td>Command and tasking boundary. Drives responsibility assignment.</td></tr><tr><td>Beat</td><td>Patrol-level boundary used for unit-level accountability within a District.</td></tr></tbody></table>
+    <h2>Screenshot Panels</h2>
+    <div class="panels">
+      <div class="panel"><h3>A. Citywide Overview</h3><div class="shot-wrap"><img src="file:///C:/Users/carucci_r/OneDrive%20-%20City%20of%20Hackensack/10_Projects/Acute_Crime/Data/images/overview.jpg" alt="A. Citywide Overview" class="shot-img"></div><p class="guidance">Full-extent view showing all districts, beats, and overlay layers.</p><div class="notes"><strong>Operator Notes</strong><ul><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li></ul></div></div>
+      <div class="panel"><h3>B. North Cluster Zoom</h3><div class="shot-wrap"><img src="file:///C:/Users/carucci_r/OneDrive%20-%20City%20of%20Hackensack/10_Projects/Acute_Crime/Data/images/north_cluster.jpg" alt="B. North Cluster Zoom" class="shot-img"></div><p class="guidance">Zoom to north-side persistent hotspot cluster with 95%+ zones visible.</p><div class="notes"><strong>Operator Notes</strong><ul><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li></ul></div></div>
+      <div class="panel"><h3>C. Central Cluster Zoom</h3><div class="shot-wrap"><img src="file:///C:/Users/carucci_r/OneDrive%20-%20City%20of%20Hackensack/10_Projects/Acute_Crime/Data/images/central_west_cluster.jpg" alt="C. Central Cluster Zoom" class="shot-img"></div><p class="guidance">Central business / downtown corridor. Cross-check with Beat boundaries.</p><div class="notes"><strong>Operator Notes</strong><ul><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li></ul></div></div>
+      <div class="panel"><h3>D. South Cluster Zoom</h3><div class="shot-wrap"><img src="file:///C:/Users/carucci_r/OneDrive%20-%20City%20of%20Hackensack/10_Projects/Acute_Crime/Data/images/southern_cluster.jpg" alt="D. South Cluster Zoom" class="shot-img"></div><p class="guidance">South-side cluster view. Note any cross-district overlap.</p><div class="notes"><strong>Operator Notes</strong><ul><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li></ul></div></div>
+      <div class="panel"><h3>E. Layer Pane / Symbology</h3><div class="shot-wrap"><img src="file:///C:/Users/carucci_r/OneDrive%20-%20City%20of%20Hackensack/10_Projects/Acute_Crime/Data/images/centeral_east_cluster.jpg" alt="E. Layer Pane / Symbology" class="shot-img"></div><p class="guidance">Capture of Contents pane showing active layers and current symbology.</p><div class="notes"><strong>Operator Notes</strong><ul><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li></ul></div></div>
+      <div class="panel"><h3>F. Final Command-Ready View</h3><div class="shot-wrap"><img src="file:///C:/Users/carucci_r/OneDrive%20-%20City%20of%20Hackensack/10_Projects/Acute_Crime/Data/images/centeral_east_cluster.jpg" alt="F. Final Command-Ready View" class="shot-img"></div><p class="guidance">Clean, labeled view suitable for inclusion in command briefing.</p><div class="notes"><strong>Operator Notes</strong><ul><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li></ul></div></div>
+    </div>
+    <h2>Policy Guardrails</h2>
+    <div class="alert green"><p><strong>Tiering and Validation Rules:</strong></p><ul style="margin-top:6px;margin-bottom:0"><li>Tier A: high confidence + risk &gt;= 0.70</li><li>Tier B: high/medium confidence + risk 0.55-0.69</li><li>Tier C: watchlist</li><li>Downtrend downgrade requires 2 down cycles + supervisor validation</li><li>Overlay scope top 50</li><li>Confidence calibration next cycle</li></ul></div>
+    <h2>Known Runtime Notes</h2>
+    <div class="alert red"><p><strong>Environment Deviations:</strong></p><ul style="margin-top:6px;margin-bottom:0"><li>.lyrx load may show ERROR 000229 in this environment</li><li>source-APRX fallback is approved and operational</li><li>if APRX save lock occurs, save manually in ArcGIS Pro</li></ul></div>
+    <h2>Checklist Before Briefing</h2>
+    <ul class="checklist"><li>All six screenshot panels populated and labeled.</li><li>Tiering overlay (Top 50 + 95%+ zones) visible and legible.</li><li>District and Beat boundaries confirmed for tasking.</li><li>Operator notes captured for each panel.</li><li>Guardrails reviewed; no Tier A/B changes made without validation.</li><li>Runtime deviations documented in Post-Run Signoff.</li><li>Sensitivity marking (LES) present on all shared copies.</li></ul>
+    <h2>Post-Run Signoff</h2>
+    <div class="signoff-grid"><div><label>Date / Time</label><div class="field">&nbsp;</div></div><div><label>Operator</label><div class="field">&nbsp;</div></div><div class="full"><label>Result</label><div class="field">PASS / PASS-WITH-DEFERRALS / BLOCKED</div></div><div class="full"><label>Notes</label><div class="field">&nbsp;</div><div class="field">&nbsp;</div></div></div>
+  </div>
+  <div class="footer">Hackensack Police Department - Safe Streets Operations Control Center | T4 DV Intervention Map Companion | Classification: Law Enforcement Sensitive | Version: 1.0</div>
+</div>
+</body>
+</html>

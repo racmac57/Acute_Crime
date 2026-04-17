@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T4 Hotspot Analysis — Methodology Summary | HPD SSOCC</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;font-size:13.5px;color:#1a1a2e;background:#f5f5f0;padding:40px 20px}
+.page{max-width:900px;margin:0 auto;background:#fff;border:1px solid #ccc;box-shadow:0 2px 12px rgba(0,0,0,.12)}
+.header{background:#1a2744;color:#fff;padding:28px 24px 22px;border-bottom:4px solid #c8a84b}
+.header .dept{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#c8a84b;margin-bottom:6px}
+.header h1{font-size:20px;font-weight:700;line-height:1.3;margin-bottom:4px}
+.header .subtitle{font-size:12px;color:#b0b8cc;font-style:italic}
+.meta-bar{background:#eef0f5;border-bottom:1px solid #d0d4de;padding:14px 24px;display:flex;gap:40px;font-size:11.5px;color:#444;flex-wrap:wrap}
+.meta-bar span strong{color:#1a2744}
+.status-les{color:#b71c1c;font-weight:700;letter-spacing:.5px}
+.content{padding:32px 24px 40px}
+h2{font-size:15px;font-weight:700;color:#1a2744;text-transform:uppercase;letter-spacing:1px;border-bottom:2px solid #c8a84b;padding-bottom:5px;margin:28px 0 14px}
+h2:first-of-type{margin-top:0}
+h3{font-size:13px;font-weight:700;color:#1a2744;margin:18px 0 8px}
+p{line-height:1.6;margin-bottom:12px;color:#2c2c3e}
+ul,ol{margin:0 0 12px 22px;color:#2c2c3e;line-height:1.6;font-size:13px}
+li{margin-bottom:5px}
+.alert{background:#fff8e6;border-left:4px solid #c8a84b;padding:14px 18px;margin:16px 0;border-radius:0 4px 4px 0}
+.alert.green{background:#f0faf2;border-left-color:#2e7d32}
+.alert.red{background:#fff0f0;border-left-color:#b71c1c}
+.alert.blue{background:#f0f4ff;border-left-color:#1a2744}
+.alert p{margin:0;font-size:13px;line-height:1.6}
+.alert strong{color:#1a2744}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:14px 0 20px}
+th{background:#1a2744;color:#fff;padding:9px 12px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+th.center,td.center{text-align:center}
+td{padding:8px 12px;border-bottom:1px solid #e8e8ee;vertical-align:top}
+tr:nth-child(even) td{background:#f7f8fb}
+.score-high{color:#b71c1c;font-weight:700}
+.score-mid{color:#e65100;font-weight:700}
+.score-low{color:#1565c0;font-weight:700}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:14px 0 20px}
+.box{border:1px solid #d0d4de;border-radius:4px;padding:14px 16px;background:#fafbfd}
+.box h3{margin:0 0 10px;font-size:12px;text-transform:uppercase;letter-spacing:.6px;border-left:3px solid #c8a84b;padding-left:7px}
+.box ul{font-size:12.5px}
+.stat-row{display:flex;gap:0;border:1px solid #d0d4de;border-radius:4px;overflow:hidden;margin:14px 0 20px}
+.stat{flex:1;padding:16px 12px;text-align:center;border-right:1px solid #d0d4de}
+.stat:last-child{border-right:none}
+.stat .num{font-size:22px;font-weight:700;color:#1a2744;display:block}
+.stat .lbl{font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:#666;margin-top:4px}
+.footer{background:#eef0f5;border-top:2px solid #1a2744;padding:12px 24px;font-size:10.5px;color:#666;line-height:1.6}
+@page{size:letter portrait;margin:18mm 16mm}
+@media print{body{background:#fff;padding:0}.page{box-shadow:none;border:none;max-width:100%}.two-col{grid-template-columns:1fr}.stat-row{flex-wrap:wrap}.stat{flex:0 0 50%}}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="dept">City of Hackensack &nbsp;|&nbsp; Police Department &nbsp;|&nbsp; Safe Streets Operations Control Center</div>
+    <h1>T4 Hotspot Analysis — Methodology Summary</h1>
+    <div class="subtitle">How locations are scored, ranked, and selected for directed patrol | Command staff reference</div>
+  </div>
+
+  <div class="meta-bar">
+    <span><strong>Analysis Date:</strong> 2026-04-17</span>
+    <span><strong>Horizon:</strong> 2024-01-01 – 2026-03-31</span>
+    <span><strong>Analyst:</strong> R. A. Carucci #261, SSOCC</span>
+    <span><strong class="status-les">LAW ENFORCEMENT SENSITIVE</strong></span>
+  </div>
+
+  <div class="content">
+
+    <!-- DATA SOURCES -->
+    <h2>1. How Data Is Gathered</h2>
+
+    <p>Two independent data streams feed every T4 analysis run. Neither is used alone — they are cross-referenced and scored separately before being combined into a single location score.</p>
+
+    <div class="two-col">
+      <div class="box">
+        <h3>CAD — Computer-Aided Dispatch</h3>
+        <ul>
+          <li>Citizen-generated calls only (911, phone, walk-in)</li>
+          <li>28-day active cycle window + 90-day and YTD lookback</li>
+          <li>Filtered to disorder-relevant call types: shots fired, assaults, fights, disorderly groups, suspicious persons/vehicles, ordinance violations</li>
+          <li>Self-initiated officer activity separated and reported independently — it does <em>not</em> inflate the demand score</li>
+          <li>Unfounded, Canceled, and Checked-OK dispositions excluded</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>RMS — Records Management System</h3>
+        <ul>
+          <li>UCR Part 1 violent and property crime reports tied to the same locations and cycle window</li>
+          <li>Two-layer domestic violence filter applied before any scoring:<br>
+            (1) case-number blocklist (1,536 confirmed DV cases removed)<br>
+            (2) incident-type fallback to catch unlisted cases</li>
+          <li>Only RMS records that geographically match a scored CAD location within the same 28-day cycle receive a bonus — no standalone RMS hotspots</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat"><span class="num">4,772</span><span class="lbl">CAD Events Analyzed</span></div>
+      <div class="stat"><span class="num">835</span><span class="lbl">RMS Events Analyzed</span></div>
+      <div class="stat"><span class="num">743</span><span class="lbl">Distinct Locations Scored</span></div>
+      <div class="stat"><span class="num">10</span><span class="lbl">Persistent Hotspots Identified</span></div>
+      <div class="stat"><span class="num">27+</span><span class="lbl">Months of Historical Data</span></div>
+    </div>
+
+    <!-- SCORING -->
+    <h2>2. How Locations Are Weighted and Scored</h2>
+
+    <p>Every scored location receives a <strong>weighted score</strong> built from three layers applied in sequence. Scores are never raw call counts — they reflect severity, recency, and persistence.</p>
+
+    <h3>Tier 1 — CAD Base Points (citizen-generated calls only)</h3>
+    <table>
+      <tr><th>Call Category</th><th class="center">Points</th><th>Rationale</th></tr>
+      <tr><td>Shots fired / weapons-related</td><td class="center score-high">5</td><td>Highest public-safety signal; rare, high-severity</td></tr>
+      <tr><td>Aggravated assault (CAD-reported)</td><td class="center score-high">4</td><td>Confirmed violence indicator</td></tr>
+      <tr><td>Fights / group fights</td><td class="center score-mid">3</td><td>Active disorder with injury potential</td></tr>
+      <tr><td>Disorderly groups</td><td class="center score-mid">3</td><td>Precursor-level disorder</td></tr>
+      <tr><td>Suspicious persons / vehicles</td><td class="center score-low">2</td><td>Low-severity signal; high-volume locations reviewed for caller-vigilance bias</td></tr>
+      <tr><td>Ordinance violations / warnings</td><td class="center score-low">1</td><td>Quality-of-life baseline</td></tr>
+    </table>
+
+    <h3>Tier 2 — RMS Part 1 Crime Bonus (added on top of Tier 1)</h3>
+    <table>
+      <tr><th>RMS Crime Category</th><th class="center">Bonus Points</th></tr>
+      <tr><td>Homicide / Attempted Homicide</td><td class="center score-high">+10</td></tr>
+      <tr><td>Robbery (firearm)</td><td class="center score-high">+7</td></tr>
+      <tr><td>Aggravated Assault (confirmed RMS)</td><td class="center score-mid">+5</td></tr>
+      <tr><td>Robbery (other weapon / strong arm)</td><td class="center score-mid">+5</td></tr>
+      <tr><td>Burglary</td><td class="center score-low">+3</td></tr>
+      <tr><td>Motor Vehicle Theft</td><td class="center score-low">+2</td></tr>
+      <tr><td>Larceny (≥ $500 threshold)</td><td class="center">+1</td></tr>
+    </table>
+
+    <h3>Recency Decay — Older Incidents Count Less</h3>
+    <table>
+      <tr><th>Age of Incident</th><th class="center">Score Multiplier</th><th>Effect</th></tr>
+      <tr><td>≤ 28 days (current cycle)</td><td class="center score-high">1.00×</td><td>Full weight</td></tr>
+      <tr><td>29–90 days</td><td class="center score-mid">0.75×</td><td>Recent history, reduced</td></tr>
+      <tr><td>91–180 days</td><td class="center score-low">0.50×</td><td>Prior cycle context</td></tr>
+      <tr><td>181+ days (YTD)</td><td class="center">0.25×</td><td>Long-term pattern signal only</td></tr>
+    </table>
+
+    <h3>Repeat-Location Boost</h3>
+    <p>If a location has <strong>3 or more citizen-generated scoring incidents in the current 28-day cycle</strong>, its cycle score is multiplied by <strong>1.25×</strong>. This reflects the operational reality that a location demanding repeated response within a single cycle warrants elevated attention regardless of its historical average.</p>
+
+    <div class="alert blue">
+      <p><strong>Final Score Formula:</strong><br><br>
+      <code>location_score = [ Σ(Tier 1 × recency) + Σ(Tier 2 × recency) ] × location_boost</code><br><br>
+      Locations are then ranked citywide by weighted score — never by raw call count alone.</p>
+    </div>
+
+    <!-- CLASSIFICATION -->
+    <h2>3. How a Location Is Classified as a Hotspot</h2>
+
+    <p>Once all locations are scored and ranked, they are classified into one of five categories. Classification is applied in priority order — the first matching rule wins.</p>
+
+    <table>
+      <tr><th>Classification</th><th>Criteria</th><th>Operational Meaning</th></tr>
+      <tr>
+        <td><strong>Chronic</strong></td>
+        <td>Top 10% of citywide weighted scores for <strong>3 or more consecutive 28-day cycles</strong></td>
+        <td>Sustained, entrenched problem. Warrants CPTED review, landlord/business engagement, or multi-agency coordination.</td>
+      </tr>
+      <tr>
+        <td><strong>Persistent</strong></td>
+        <td>Appears on current cycle <em>and</em> prior cycle scoring lists; below Chronic threshold</td>
+        <td>Recurring but not yet entrenched. Primary directed-patrol target.</td>
+      </tr>
+      <tr>
+        <td><strong>Emerging</strong></td>
+        <td>Current-cycle score ≥ 2× prior-cycle score, OR more than 2 standard deviations above the location's own 90-day rolling mean</td>
+        <td>Rapid increase in activity. Requires early intervention before it becomes Persistent.</td>
+      </tr>
+      <tr>
+        <td><strong>Diminishing</strong></td>
+        <td>Present in prior cycle; current-cycle score dropped more than 50%</td>
+        <td>Activity declining — but triggers a displacement check before concluding it has resolved.</td>
+      </tr>
+      <tr>
+        <td><strong>One-off</strong></td>
+        <td>Appears in current cycle only with no prior-cycle pattern</td>
+        <td>Isolated incident(s). Not briefed as a hotspot; listed for analyst awareness only.</td>
+      </tr>
+    </table>
+
+    <div class="alert">
+      <p><strong>Displacement Check:</strong> When a location is classified Diminishing, the system automatically examines a 1–3 block buffer around the prior hotspot centroid. If current-cycle activity inside that buffer equals or exceeds 50% of the prior cycle's volume at the original location, a <strong>"Possible Displacement"</strong> flag is raised. Displacement is a hypothesis requiring supervisor field validation — it is not a confirmed finding.</p>
+    </div>
+
+    <!-- ADD / REMOVE CRITERIA -->
+    <h2>4. Criteria for Adding or Removing a Hotspot</h2>
+
+    <div class="two-col">
+      <div class="box">
+        <h3>A location is ADDED when:</h3>
+        <ul>
+          <li>Weighted score places it in the top 10% citywide in the current cycle <strong>AND</strong></li>
+          <li>It has a minimum of <strong>3 citizen-generated scoring incidents</strong> in the current 28-day window (below 3 = Low confidence, appendix only — not briefed as a hotspot) <strong>AND</strong></li>
+          <li>Confidence band is <strong>Medium or High</strong> (≥ 3 incidents = Medium; ≥ 5 incidents = High)</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>A location is REMOVED when:</h3>
+        <ul>
+          <li>Score drops more than <strong>50% from prior cycle</strong> (classified Diminishing) AND a displacement check finds no evidence of nearby relocation <strong>OR</strong></li>
+          <li>Score falls below the top 10% threshold for <strong>two consecutive cycles</strong> with supervisor field validation confirming no active problem <strong>OR</strong></li>
+          <li>Confidence band drops to Low (fewer than 3 scoring incidents) and remains there the following cycle</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="alert red">
+      <p><strong>Downtrend Policy (Approved Command Decision):</strong> A single cycle showing a score decline does <em>not</em> trigger removal. A downtrend flag requires <strong>two consecutive down cycles plus supervisor field validation</strong> before a location is removed from the active hotspot list. One cycle of decline — especially in winter months — is treated as a seasonal artifact, not a confirmed resolution.</p>
+    </div>
+
+    <!-- CONFIDENCE -->
+    <h2>5. Confidence Ratings</h2>
+
+    <p>Every hotspot carries a confidence rating. Ratings are computed algorithmically — they are not judgment calls.</p>
+
+    <table>
+      <tr><th>Condition</th><th>Confidence Band</th><th>Operational Use</th></tr>
+      <tr><td>≥ 5 citizen-generated scoring incidents in current cycle</td><td><strong class="score-high">High</strong></td><td>Full briefing. Directed patrol target.</td></tr>
+      <tr><td>3–4 citizen-generated incidents</td><td><strong class="score-mid">Medium</strong></td><td>Briefed with caveat. Discretionary patrol target.</td></tr>
+      <tr><td>&lt; 3 incidents</td><td><strong class="score-low">Low</strong></td><td>Appendix only. Do not deploy directed patrol solely on this signal.</td></tr>
+      <tr><td>Missing location on &gt; 10% of the location's own records</td><td colspan="2">Downgrade one level from base rating</td></tr>
+      <tr><td>Unfounded / Canceled disposition rate &gt; 30% at the location</td><td colspan="2">Downgrade one level from base rating</td></tr>
+    </table>
+
+    <p>All 10 locations in the current persistent hotspot list carry a <strong class="score-high">High</strong> confidence rating.</p>
+
+    <!-- PATROL TIERS -->
+    <h2>6. Patrol Deployment Tiers (Approved Command Decision)</h2>
+
+    <table>
+      <tr><th>Tier</th><th>Threshold</th><th>Deployment Level</th></tr>
+      <tr><td><strong class="score-high">Tier A</strong></td><td>High confidence + persistent risk score ≥ 0.70</td><td>Mandatory directed patrol windows</td></tr>
+      <tr><td><strong class="score-mid">Tier B</strong></td><td>High or Medium confidence + risk score 0.55–0.69</td><td>Discretionary / surge deployment</td></tr>
+      <tr><td><strong class="score-low">Tier C</strong></td><td>Below Tier B threshold</td><td>Watchlist — analyst monitoring only</td></tr>
+    </table>
+
+    <p>Of the current top 10: <strong>Locations 1–4</strong> qualify for Tier A (risk ≥ 0.70). <strong>Locations 5–7</strong> qualify for Tier B (risk 0.55–0.69). <strong>Locations 8–10</strong> are Tier C watchlist.</p>
+
+    <!-- WHAT THIS IS NOT -->
+    <h2>7. Important Constraints and Ethical Guardrails</h2>
+
+    <div class="alert green">
+      <p><strong>This is historical risk patterning — not predictive policing.</strong> T4 analysis describes where and when disorder has concentrated historically. It does not predict future crimes or individuals. All outputs are advisory. Field supervisors validate ground truth before deployment decisions are finalized.</p>
+    </div>
+
+    <ul>
+      <li><strong>Location and condition only.</strong> No individual is targeted. No demographic variables are used as inputs. Analysis is defensible under the U.S. Constitution (4th/14th Amendments), NJ AG Directive 2021-6 (Bias-Free Policing), and NJ AG Directive 2023-1 (Use of Technology in Policing).</li>
+      <li><strong>Domestic violence excluded.</strong> DV incidents are removed before scoring via a two-layer filter (case-number blocklist + incident-type fallback). Household-intimate incidents skew street-disorder hotspot scoring toward residential addresses and are operationally irrelevant to directed patrol for public disorder.</li>
+      <li><strong>Self-initiated patrol separated.</strong> Officer self-initiated activity is tracked separately and never counted in the citizen-demand score. A location where officers frequently self-initiate without corresponding citizen calls is flagged for review — not rewarded with a higher score.</li>
+      <li><strong>High-false-alarm call types excluded.</strong> Burglar alarms, medical calls, parking complaints, and motor vehicle crashes are excluded from scoring. They do not reflect public disorder demand.</li>
+      <li><strong>Address normalization caveat.</strong> CAD and RMS addresses are normalized to 100-block segments. Minor data-entry differences across incidents can occasionally split a real hotspot across two adjacent rows. Use the ArcGIS map for spatial ground truth.</li>
+    </ul>
+
+  </div><!-- /content -->
+
+  <div class="footer">
+    <strong>Classification:</strong> Law Enforcement Sensitive — location/condition-based operational analytics. No individual targeting. No PII. &nbsp;|&nbsp;
+    <strong>Analyst:</strong> R. A. Carucci #261, Safe Streets Operations Control Center (SSOCC), Hackensack Police Department &nbsp;|&nbsp;
+    <strong>Generated:</strong> 2026-04-17 &nbsp;|&nbsp;
+    <strong>Data horizon:</strong> 2024-01-01 – 2026-03-31 &nbsp;|&nbsp;
+    Do not distribute outside HPD command staff and SSOCC without supervisor authorization.
+  </div>
+
+</div><!-- /page -->
+</body>
+</html>

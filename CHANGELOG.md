@@ -8,6 +8,20 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added (2026-04-16 — T4 scoring pipeline scripts)
+
+- **`Scripts/t4/`** package created with production pipeline modules:
+  - `column_norm.py` — Shared column normalization (snake_case + 60-entry alias map + case number standardizer)
+  - `type_fallback.py` — Layer 2 DV type matching (7 regex patterns + reference file lookup). Over-exclusion fix applied: `build_dv_type_set()` now filters incident_type_map.csv to DV-keyword rows only, preventing generic assault/harassment entries from triggering false DV exclusions
+  - `score_integration.py` — Full scoring pipeline (Tier 1 CAD + Tier 2 RMS + recency decay + repeat-location boost + two-layer DV exclusion + Data Quality Note output)
+  - `cad_rms_qc_preflight.py` — Pre-flight QC (10+ CAD checks, 7+ RMS checks, DV blocklist currency, JSON report output)
+- **CLAUDE.md §23** — All 6 TODOs marked **Done** with file pointers
+
+### Fixed (2026-04-16 — score_integration E2E)
+
+- **Tier 2 NIBRS lookup** — RMS exports store values like `13A = Aggravated Assault`; `score_tier2()` now strips the leading code token (`\d{2}[A-Z]` or `\d{3}`) before the `TIER2_SCORES` map
+- **Recency decay dtype** — `decay` columns are always `float64` (avoids empty RMS Part 1 subset producing a datetime-typed Series and crashing `tier2_pts * decay`)
+
 ### Changed (2026-04-16)
 
 - **`2026_02_RMS.xlsx`** — Operator re-exported February 2026 RMS (replacing 0-byte placeholder); **verified 539 KB** on disk. [Docs/data_gaps.md](Docs/data_gaps.md), README, CLAUDE §24 updated.
@@ -45,21 +59,20 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - DV blocklist now covers 2023-01-01 through 2026-04-16 — sufficient for current T4 analysis windows
 - CLAUDE.md §6.4 and §6.5 updated with combined blocklist status
 
-### Pending — DV Exclusion Module (plan todos)
+### Closed — DV Exclusion Module (all 6 plan todos done)
 
-- `confirm-rms-source` — **Closed** in [Docs/t4_config_and_aliases.md](Docs/t4_config_and_aliases.md) (default local RMS vs AGOL)
-- `blocklist-pipeline` — **Closed** — `Data/dv_case_numbers_for_t4.csv` exists
-- `type-fallback` — **Pending code**
-- `score-integration` — **Pending code**
-- `refresh-governance` — **Closed** — [Docs/dv_blocklist_refresh_governance.md](Docs/dv_blocklist_refresh_governance.md)
-- `cad-rms-qc-preflight` — (Optional) Run `cad_rms_data_quality` when using raw exports
+- `confirm-rms-source` — **Done** — [Docs/t4_config_and_aliases.md](Docs/t4_config_and_aliases.md)
+- `blocklist-pipeline` — **Done** — `Data/dv_case_numbers_for_t4.csv` (1,536 rows)
+- `type-fallback` — **Done** — `Scripts/t4/type_fallback.py`
+- `score-integration` — **Done** — `Scripts/t4/score_integration.py`
+- `refresh-governance` — **Done** — [Docs/dv_blocklist_refresh_governance.md](Docs/dv_blocklist_refresh_governance.md)
+- `cad-rms-qc-preflight` — **Done** — `Scripts/t4/cad_rms_qc_preflight.py`
 
 ### Pending — Core Pipeline
 
-- No production scoring scripts exist yet
-- No address normalization (`Block_Final`) implementation
-- No `HowReported = Radio` resolution logic implemented
-- No cycle alignment from T4 Master workbook (`T4_Master_Reporting_Template.xlsx`) wired in
+- Address normalization (`Block_Final`) — not yet implemented; `score_integration.py` uses raw address as proxy
+- `HowReported = Radio` resolution logic — scored by default with Data Quality Note flag; full linkage check (§6.3) not implemented
+- Cycle alignment from T4 Master workbook (`T4_Master_Reporting_Template.xlsx`) not wired in
 - No ArcGIS Pro/Online publishing workflow scripted
 - No Power BI CSV export generation
 - No displacement analysis automation

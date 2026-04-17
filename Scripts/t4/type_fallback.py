@@ -44,13 +44,20 @@ def build_dv_type_set(
     """
     dv_types: Set[str] = set()
 
-    # incident_type_map.csv — 'raw' column; all rows are DV-adjacent by definition
+    # incident_type_map.csv — only load rows with explicitly DV keywords.
+    # Generic entries (assault, harassment, threats) exist in this file because
+    # it was built for the dv_doj project; loading them here would over-exclude.
+    _DV_KEYWORDS = re.compile(
+        r'domestic|restraining|stalking|violation.*restraining|'
+        r'2c[:\s]*25|tro\b|fro\b', re.IGNORECASE,
+    )
     if incident_type_map_path and Path(incident_type_map_path).exists():
         itm = pd.read_csv(incident_type_map_path, encoding='utf-8-sig')
         for col in ['raw', 'canonical']:
             if col in itm.columns:
                 vals = itm[col].dropna().str.strip().str.lower()
-                dv_types.update(vals)
+                dv_vals = [v for v in vals if _DV_KEYWORDS.search(v)]
+                dv_types.update(dv_vals)
 
     # CallType_Categories.csv — filter to rows containing 'domestic' in Incident
     if calltype_categories_path and Path(calltype_categories_path).exists():

@@ -16,6 +16,7 @@ Usage:
 import argparse
 import json
 import logging
+import re
 import sys
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -60,6 +61,18 @@ TIER1_SCORES = {
     'ordinance':         1,
     'city ordinance':    1,
 }
+
+def extract_nibrs_code_key(nibrs_raw: str) -> str:
+    """
+    RMS exports often store NIBRS as '13A = Aggravated Assault' or '120 = Robbery'.
+    Tier 2 lookup keys are the leading code token only.
+    """
+    if pd.isna(nibrs_raw):
+        return ''
+    s = str(nibrs_raw).strip().upper()
+    m = re.match(r'^(\d{2}[A-Z]|\d{3})\b', s)
+    return m.group(1) if m else ''
+
 
 # ── Tier 2 RMS Part 1 bonus (Master Prompt §7.2) ────────────────────
 # Keyed by NIBRS code prefix. Applied on top of Tier 1.
@@ -234,7 +247,7 @@ def score_tier2(nibrs_code: str, total_value_stolen: str = None) -> int:
     """Assign Tier 2 RMS Part 1 bonus based on NIBRS code."""
     if pd.isna(nibrs_code):
         return 0
-    code = str(nibrs_code).strip().upper()
+    code = extract_nibrs_code_key(nibrs_code)
     # Larceny threshold: >= $500
     if code.startswith('23'):
         try:
@@ -277,9 +290,9 @@ def compute_location_scores(
     cad_scored = cad_citizen[cad_citizen['tier1_pts'].notna()].copy()
 
     if 'time_of_call_parsed' in cad_scored.columns:
-        cad_scored['decay'] = cad_scored['time_of_call_parsed'].apply(
-            lambda d: recency_multiplier(d, analysis_date)
-        )
+        cad_scored['decay'] = cad_scored['time_of_call_parsed'].map(
+            lambda d: recency_multiplier(d, analysis_date) if pd.notna(d) else 0.0
+        ).astype('float64')
     else:
         cad_scored['decay'] = 1.0
 
@@ -297,9 +310,9 @@ def compute_location_scores(
 
     date_col = 'incident_date_parsed' if 'incident_date_parsed' in rms_scored.columns else None
     if date_col:
-        rms_scored['decay'] = rms_scored[date_col].apply(
-            lambda d: recency_multiplier(d, analysis_date)
-        )
+        rms_scored['decay'] = rms_scored[date_col].map(
+            lambda d: recency_multiplier(d, analysis_date) if pd.notna(d) else 0.0
+        ).astype('float64')
     else:
         rms_scored['decay'] = 1.0
 

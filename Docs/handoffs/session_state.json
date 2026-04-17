@@ -1,0 +1,19 @@
+{
+  "last_active_file": {
+    "path": "C:\\Users\\carucci_r\\OneDrive - City of Hackensack\\10_Projects\\Acute_Crime\\Scripts\\t4\\type_fallback.py",
+    "section": "__main__ standalone test block (lines ~118-149); flag_dv_by_type / is_dv_type"
+  },
+  "last_completed_task": "Pushed origin/main through commit 273042c (cycle ID strategy, RMS defaults, Feb 2026 RMS 539 KB docs). DV blocklist path Data/dv_case_numbers_for_t4.csv documented.",
+  "next_task_in_progress_or_queued": "Push commit after review; optional — add Output/ to operator workflow or archive scored runs off-repo.",
+  "unresolved_errors_warnings_decisions": [
+    "Operator decision: calendar file vs Section 0-only cycle_id per Docs/t4_cycle_id_strategy.md if Tier 2 automation is required.",
+    "score_integration uses fixed PATHS in module (PROJECT OneDrive path); override flags not implemented — use repo root layout or edit PATHS for other machines."
+  ],
+  "plan_todos": {
+    "confirm-rms-source": "completed",
+    "blocklist-pipeline": "completed",
+    "type-fallback": "completed",
+    "score-integration": "completed",
+    "refresh-governance": "completed"
+  }
+}

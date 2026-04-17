@@ -615,12 +615,12 @@ All implementation work is tracked here. Do not mark any TODO complete until cod
 
 | # | ID | Description | Status | Blocking? |
 |---|----|-------------|--------|-----------|
-| 1 | `confirm-rms-source` | Decide canonical RMS input path (`Acute_Crime/Data` vs AGOL/GDB) and post-snake_case column names | **Pending** | Yes |
-| 2 | `blocklist-pipeline` | Implement `case_number` standardization + anti-join to DV blocklist | **Pending** | Yes |
-| 3 | `type-fallback` | Join `IncidentType1/2/3` to `incident_type_map`; define DV include/exclude category list | **Pending** | Yes |
-| 4 | `score-integration` | Apply exclusion before Tier 2 and precursor; extend Data Quality Note with counts by reason | **Pending** | Yes |
-| 5 | `refresh-governance` | Document DV roster refresh cadence; align `backfill_dv` `ValidationConfig` `date_end` with T4 windows | **Pending** | Yes |
-| 6 | `cad-rms-qc-preflight` | (Optional) Run `cad_rms_data_quality` validators on T4-window exports | **Pending** | No |
+| 1 | `confirm-rms-source` | Decide canonical RMS input path (`Acute_Crime/Data` vs AGOL/GDB) and post-snake_case column names | **Done** — [Docs/t4_config_and_aliases.md](Docs/t4_config_and_aliases.md) | Yes |
+| 2 | `blocklist-pipeline` | Implement `case_number` standardization + anti-join to DV blocklist | **Done** — `Data/dv_case_numbers_for_t4.csv` (1,536 rows) | Yes |
+| 3 | `type-fallback` | Join `IncidentType1/2/3` to `incident_type_map`; define DV include/exclude category list | **Done** — `Scripts/t4/type_fallback.py` | Yes |
+| 4 | `score-integration` | Apply exclusion before Tier 2 and precursor; extend Data Quality Note with counts by reason | **Done** — `Scripts/t4/score_integration.py` | Yes |
+| 5 | `refresh-governance` | Document DV roster refresh cadence; align `backfill_dv` `ValidationConfig` `date_end` with T4 windows | **Done** — [Docs/dv_blocklist_refresh_governance.md](Docs/dv_blocklist_refresh_governance.md) | Yes |
+| 6 | `cad-rms-qc-preflight` | (Optional) Run `cad_rms_data_quality` validators on T4-window exports | **Done** — `Scripts/t4/cad_rms_qc_preflight.py` | No |
 
 ---
 

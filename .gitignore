@@ -10,6 +10,9 @@ Data/*.pdf
 # Keep the DV blocklist (PII-safe, 3 columns only)
 !Data/dv_case_numbers_for_t4.csv
 
+# Scoring pipeline outputs (CSV + JSON per cycle_id)
+Output/
+
 # OS / editor
 .DS_Store
 Thumbs.db

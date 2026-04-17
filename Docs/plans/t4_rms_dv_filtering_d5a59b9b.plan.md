@@ -6,14 +6,14 @@ todos:
     content: "Closed in docs — default local Data/rms XLSX; AGOL when matching dashboard (Docs/t4_config_and_aliases.md)"
     status: completed
   - id: blocklist-pipeline
-    content: "PII-safe blocklist artifact — Data/dv_case_numbers_for_t4.csv (1,536 case_number rows; dv_final_enriched + PDF supplement through 2026-04-16). Remaining — wire anti-join in scoring code (score-integration)"
+    content: "PII-safe blocklist artifact — Data/dv_case_numbers_for_t4.csv (1,536 case_number rows; dv_final_enriched + PDF supplement through 2026-04-16); anti-join wired in Scripts/t4/score_integration.py via standardize_case_number"
     status: completed
   - id: type-fallback
-    content: Join IncidentType1/2/3 to incident_type_map + align strings with CallType_Categories for DV-adjacent categories; define explicit include/exclude category list
-    status: pending
+    content: "Scripts/t4/type_fallback.py — build_dv_type_set() from incident_type_map + CallType_Categories; DV-keyword filter on ITM rows to avoid over-exclusion; flag_dv_by_type on IncidentType1/2/3"
+    status: completed
   - id: score-integration
-    content: Apply exclusion before Tier 2 and precursor (Section 12); extend Data Quality Note with exclusion counts/reasons
-    status: pending
+    content: "Scripts/t4/score_integration.py — DV exclusion before Tier 2; Data Quality Note JSON (dv_exclusion counts by reason); Tier 2 uses leading NIBRS token from RMS labels (e.g. 13A = ...)"
+    status: completed
   - id: refresh-governance
     content: "Closed — Docs/dv_blocklist_refresh_governance.md; ongoing operator duty to refresh dv_case_numbers_for_t4.csv"
     status: completed
@@ -194,7 +194,7 @@ Session output (doc + gate work + blocklist extraction):
 - **Gates:** 1–4 closed per inspection; **Gate 3b** superseded by project blocklist file (above).
 - **Blocklist:** [dv_case_numbers_for_t4.csv](C:\Users\carucci_r\OneDrive - City of Hackensack\10_Projects\Acute_Crime\Data\dv_case_numbers_for_t4.csv) — production **anti-join** input; details in **CLAUDE.md §4a, §6, §23**.
 - **Blocker:** **`t4-cycle-id-strategy`** — master prompt cycle labels (`T4_C01W02`) not present in workbook (`T4_Current` only).
-- **Still flagged:** implement **`score-integration`** + **`type-fallback`** using Standards mappings (`confirm-rms-source` closed in docs).
+- **Implemented (2026-04-16):** **`score-integration`** + **`type-fallback`** in `Scripts/t4/` (`confirm-rms-source` closed in docs).
 
 ---
 
@@ -215,7 +215,7 @@ Core docs:
 
 | Item | Status |
 |------|--------|
-| **`score-integration` / `type-fallback`** | **Build** — Python (or ArcPy) pipeline: load `dv_case_numbers_for_t4.csv`, `standardise_case_number`, anti-join RMS; type fallback via `incident_type_map.csv`; DQ counts. *YAML/config snippets:* [Docs/t4_config_and_aliases.md](t4_config_and_aliases.md) (Agent mode can add `config/` + `Scripts/`). |
+| **`score-integration` / `type-fallback`** | **Done** — `Scripts/t4/score_integration.py`, `Scripts/t4/type_fallback.py`; blocklist path `Data/dv_case_numbers_for_t4.csv`; DQ JSON per cycle. Tier 2: parse leading NIBRS token from RMS `NIBRSClassification` labels. |
 | **Feb 2026 RMS (Gate 3a)** | **Resolved** — re-exported; verify file — [Docs/data_gaps.md](data_gaps.md). |
 | **UCRCode / NIBRS (Gate 4)** | **Closed in Standards** — wire code to JSON paths in [Docs/t4_config_and_aliases.md](t4_config_and_aliases.md). |
 | **`cad-rms-qc-preflight`** | Optional — run `cad_rms_data_quality` validators when using raw exports. |

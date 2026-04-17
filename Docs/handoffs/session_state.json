@@ -1,17 +1,22 @@
 {
   "last_active_file": {
-    "path": "C:\\Users\\carucci_r\\OneDrive - City of Hackensack\\10_Projects\\Acute_Crime\\Docs\\deliverables\\T4_C01W02_hotspots.csv",
-    "section": "T4_C01W02 closeout — 28-field Section 16 hotspot CSV promoted from _overnight/integration_out/"
+    "path": "C:\\Users\\carucci_r\\OneDrive - City of Hackensack\\10_Projects\\Acute_Crime\\Docs\\deliverables\\T4_persistent_hotspots_command_staff.md",
+    "section": "Persistent Hotspots MVP+ — top-10 command staff one-pager (2024-01-01 → 2026-03-31 horizon)"
   },
-  "last_completed_task": "T4_C01W02 overnight closeout: wired B->A->C integration, 95 tests green, promoted hotspots CSV + DQ note + integration report to Docs/deliverables/.",
-  "next_task_in_progress_or_queued": "Refresh 05_EXPORTS/_RMS/monthly/2026/2026_02_RMS.xlsx (0-byte stub); spatial-join fallback for pdzone/grid/lat/lon; decide on T4_C01 28-day run.",
+  "last_completed_task": "Persistent Hotspots MVP+ closeout: built Scripts/t4/persistent_hotspots.py; produced top-10 CSV + command staff one-pager + one-page method/caveats note in Docs/deliverables/; verified CSV<->MD consistency; added trend_90d seasonal-artifact + spatial-enrichment + RMS Feb-stub-resolved caveats to both docs; wrote handoff handoff_20260417_persistent_hotspots_mvp_plus.md.",
+  "next_task_in_progress_or_queued": "Confidence calibration against outcome data; ArcGIS overlay of top-10 location keys (lat/long + Post/PDZone/Grid spatial join) and publish T4_Persistent_Hotspots_2024_2026_Q1 hosted feature layer into the T4 Dashboard web map.",
   "unresolved_errors_warnings_decisions": [
-    "05_EXPORTS/_RMS/monthly/2026/2026_02_RMS.xlsx is 0 bytes; valid file lives under Acute_Crime/Data/rms/monthly/2026_02_RMS.xlsx — upstream sync needs a refresh before monthly/28-day rollup.",
+    "trend_90d = down on most top-10 rows is a seasonal artifact at the 2026-03-31 anchor (Jan-Mar 2026 vs Oct-Dec 2025). Not a resolution signal. YoY normalization is a follow-up.",
+    "Spatial enrichment (lat/long, Post, PDZone, Grid) not joined to persistent_hotspots top-10 output; use ArcGIS Pro overlay for now.",
+    "Address bucketing can split a real hotspot across rows (e.g., '100 Block Main St' vs '100 Main St'); soft-match dedupe deferred.",
+    "CAD-side DV filter out of scope — two-layer DV exclusion runs on RMS only; CAD domestic calls remain in the pool (master prompt §6.7 blind spot).",
+    "Confidence is a qualitative gate (high/medium/low), not a calibrated probability — calibration vs outcome data is next-iteration.",
+    "05_EXPORTS/_RMS/monthly/2026/2026_02_RMS.xlsx upstream stub still 0 bytes; Acute_Crime/Data/rms/monthly/2026_02_RMS.xlsx re-exported 2026-04-16 and used for this run.",
     "Hotspot CSV post/pdzone/grid/latitude/longitude left blank — §5.5 spatial-join fallback deferred.",
     "DV Layer 1 rescue audit shows 0 rescued matches this cycle (data was already clean); plumbing retained for future cycles with legacy case-number forms.",
     "2024_CAD_ALL: ~6% empty disposition vs ~0.15% for 2025 — affects disposition-based rules on 2024 pulls.",
     "Tier 1 scoring ignores disposition until implemented; cad_rms_data_quality DispositionValidator + enhanced_esri mapping are upstream integration targets.",
-    "score_integration PATHS hardcoded to OneDrive Acute_Crime — add CLI overrides if running elsewhere.",
+    "score_integration / persistent_hotspots PATHS hardcoded to OneDrive Acute_Crime — add CLI overrides if running elsewhere.",
     "Imported_from_sandbox/dv_doj_arcgis_exports local only — repair data sources in Pro if paths point to Sandbox."
   ],
   "plan_todos": {

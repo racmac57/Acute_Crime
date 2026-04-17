@@ -1,7 +1,7 @@
 # T4 Hotspot Analysis — Project Summary
 
 **Last updated:** 2026-04-16
-**Status:** Design complete. No production code exists. All implementation TODOs are pending.
+**Status:** Design complete. **Decisions closed in Docs/** (cycle IDs, RMS source default, DV blocklist governance, data gaps, column aliases). **Scoring code** still not built — `type-fallback` + `score-integration` remain.
 
 ---
 
@@ -42,7 +42,7 @@ All analysis is **location/condition-based only**. No individual targeting. No d
 ### Data Available
 
 - **CAD:** 2024-2025 full-year, 2026 Jan-Mar monthly (XLSX in `Data/cad/`)
-- **RMS:** 2024-2025 full-year, 2026 Jan and Mar monthly (XLSX in `Data/rms/`; Feb 2026 is empty/0 bytes)
+- **RMS:** 2024-2025 full-year, 2026 Jan–Mar monthly (XLSX in `Data/rms/`; Feb 2026 **539 KB** as of 2026-04-16)
 - **City ordinance complaints:** 2024-2026 (CSV in `Data/city_ord/`)
 - **Summons:** 2023, 2025-2026 (CSV in `Data/summons/`)
 - **Time reports:** 2024-2026 (XLSX in `Data/timereport/`)
@@ -51,16 +51,18 @@ All analysis is **location/condition-based only**. No individual targeting. No d
 
 ## What Is Pending
 
-### Implementation TODOs (6 total, all pending)
+### Plan TODOs (snapshot)
 
-| # | TODO ID | Description | Blocking? |
-|---|---------|-------------|-----------|
-| 1 | `confirm-rms-source` | Decide canonical RMS input path and post-normalization column names | Yes — blocks all downstream |
-| 2 | `blocklist-pipeline` | Build case_number standardization + anti-join to DV blocklist | Yes — blocks scoring |
-| 3 | `type-fallback` | Join IncidentType1/2/3 to incident_type_map; define DV include/exclude list | Yes — blocks scoring |
-| 4 | `score-integration` | Wire DV exclusion into Tier 2 and precursor; extend Data Quality Note | Yes — blocks output |
-| 5 | `refresh-governance` | Document DV roster refresh cadence; align ValidationConfig with T4 windows | Yes — blocks 2026 runs |
-| 6 | `cad-rms-qc-preflight` | (Optional) Run cad_rms_data_quality validators on T4-window exports | No — enhancement |
+| ID | Status |
+|----|--------|
+| `confirm-rms-source` | **Closed** — [Docs/t4_config_and_aliases.md](Docs/t4_config_and_aliases.md) |
+| `blocklist-pipeline` | **Closed** — `Data/dv_case_numbers_for_t4.csv` |
+| `refresh-governance` | **Closed** — [Docs/dv_blocklist_refresh_governance.md](Docs/dv_blocklist_refresh_governance.md) |
+| `inspect-t4-master-workbook` | **Closed** — CLAUDE §4a |
+| `t4-cycle-id-strategy` | **Closed** — [Docs/t4_cycle_id_strategy.md](Docs/t4_cycle_id_strategy.md) |
+| `type-fallback` | **Pending** — code |
+| `score-integration` | **Pending** — code |
+| `cad-rms-qc-preflight` | Optional |
 
 ### Core Pipeline (Not Yet Built)
 
@@ -73,7 +75,7 @@ All analysis is **location/condition-based only**. No individual targeting. No d
 - No effectiveness feedback loop
 - No Power BI CSV export
 - No ArcGIS Pro/Online publishing automation
-- No cycle alignment from `T4_Master_Reporting_Template.xlsx`
+- Cycle labels supplied via **Section 0** ([Docs/t4_cycle_id_strategy.md](Docs/t4_cycle_id_strategy.md)) — not from workbook `ReportName` alone
 
 ---
 
@@ -81,9 +83,9 @@ All analysis is **location/condition-based only**. No individual targeting. No d
 
 ### Minimum Viable Pipeline
 
-1. **Resolve TODO #1** — Confirm whether scripts read from `Data/rms/` XLSX files, AGOL feature class, or a GDB export. Define the canonical column names after snake_case normalization.
+1. **RMS input** — Default `Data/rms/*.xlsx`; AGOL when matching dashboard ([Docs/t4_config_and_aliases.md](Docs/t4_config_and_aliases.md)).
 
-2. **Build the DV exclusion module** (TODOs #2-4) — Case blocklist + type fallback, wired before scoring. Must log exclusion counts to Data Quality Note.
+2. **Build the DV exclusion module** — Load `dv_case_numbers_for_t4.csv` + type fallback; log exclusion counts to Data Quality Note.
 
 3. **Build the scoring engine** — Implement the Section 7 formula: `location_score = [Σ(tier1 × decay) + Σ(tier2 × decay)] × location_boost`
 
@@ -91,15 +93,15 @@ All analysis is **location/condition-based only**. No individual targeting. No d
 
 5. **Build classification logic** — Apply Section 9 criteria in priority order (Chronic → Persistent → Emerging → Diminishing → One-off) using historical cycle data.
 
-6. **Wire cycle alignment** — Read `T4_Master_Reporting_Template.xlsx` (see CLAUDE.md §3 for path) for `cycle_id`, `cycle_7day`, `cycle_28day`. Assert `cycle_id` is non-null before any output.
+6. **Wire cycle alignment** — Populate `cycle_id`, `cycle_7day`, `cycle_28day` from **Section 0** ([Docs/t4_cycle_id_strategy.md](Docs/t4_cycle_id_strategy.md)); assert non-null before output.
 
 7. **Build output export** — Generate the 28-field CSV per Section 16 schema + Data Quality Note per Section 17.
 
 ### Before First 2026 Run
 
-- **Regenerate DV roster** — `backfill_dv` `ValidationConfig` `date_end` must extend past the T4 analysis window (currently ends 2025-12-31)
-- **Verify `T4_Master_Reporting_Template.xlsx`** exists and contains cycle definitions for the target period (see CLAUDE.md §3 for resolved path)
-- **Verify `2026_02_RMS.xlsx`** — currently 0 bytes; determine if data is missing or the month had no RMS activity
+- **DV blocklist** — `Data/dv_case_numbers_for_t4.csv` through 2026-04-16; refresh per [Docs/dv_blocklist_refresh_governance.md](Docs/dv_blocklist_refresh_governance.md) when new rosters arrive
+- **`T4_Master_Reporting_Template.xlsx`** — optional context (CLAUDE §3); **cycle strings from Section 0**
+- **`2026_02_RMS.xlsx`** — re-exported; see [Docs/data_gaps.md](Docs/data_gaps.md)
 - **Run Section 22 pre-flight checklist** (16 items) on the first cycle window
 
 ### Full Operational Capability
@@ -115,9 +117,9 @@ All of the above, plus:
 
 ## Key Risks
 
-1. **DV roster lag** — `dv_final_enriched.csv` data ends **2025-10-29** (~6 months gap). `ValidationConfig` says `date_end = 2025-12-31` but actual data falls short. Any 2026 T4 run requires a `backfill_dv` refresh first.
+1. **DV blocklist currency** — Project CSV extends through **2026-04-16**; refresh per [Docs/dv_blocklist_refresh_governance.md](Docs/dv_blocklist_refresh_governance.md). Upstream `dv_final_enriched` alone still ends **2025-10-29** unless regenerated.
 2. **Column name mismatch** — DV exports use `Case Number` (space); T4 uses `CaseNumber`; must normalize to `case_number`
-3. **Empty RMS month** — February 2026 RMS file is 0 bytes; may create a data gap in any cycle spanning that month
+3. **RMS month sync** — Confirm re-exported `2026_02_RMS.xlsx` is present where analysis runs (OneDrive path)
 4. **No scripts exist** — Everything from data load through output is manual or unbuilt; timeline to operational depends entirely on build velocity
 5. **PII exposure** — Any accidental copy of `dv_final_enriched.csv` into this project directory violates PII policy
 

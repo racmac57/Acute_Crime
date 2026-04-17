@@ -8,6 +8,18 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed (2026-04-16)
+
+- **`2026_02_RMS.xlsx`** — Operator re-exported February 2026 RMS (replacing 0-byte placeholder); **verified 539 KB** on disk. [Docs/data_gaps.md](Docs/data_gaps.md), README, CLAUDE §24 updated.
+
+### Added (2026-04-16 — close remaining operator/build table items)
+
+- [Docs/t4_cycle_id_strategy.md](Docs/t4_cycle_id_strategy.md) — **Cycle ID generation closed:** `cycle_id` / `cycle_7day` / `cycle_28day` authoritative from **Section 0**; workbook `T4_Current` is context-only
+- [Docs/data_gaps.md](Docs/data_gaps.md) — **`2026_02_RMS.xlsx`** 0-byte gap documented (operator actions)
+- [Docs/t4_config_and_aliases.md](Docs/t4_config_and_aliases.md) — **`confirm-rms-source` closed:** default local `Data/rms/*.xlsx` vs AGOL; copy-paste **`config/t4_defaults.yaml`** block; **`HourMinuetsCalc`** → canonical `hour_minuets_calc` alias table
+- [Docs/dv_blocklist_refresh_governance.md](Docs/dv_blocklist_refresh_governance.md) — refresh rules for `Data/dv_case_numbers_for_t4.csv`
+- README + CLAUDE updated for the above (cycle_id source, RMS canonical input, §13 cycle reporting)
+
 ### Fixed (2026-04-16 — doc consistency pass)
 
 - README pre-flight checklist count corrected: was "22 items", now references Master Prompt §22 (16 items) and CLAUDE.md §22 (20 items with 4 DV extensions)
@@ -33,14 +45,14 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - DV blocklist now covers 2023-01-01 through 2026-04-16 — sufficient for current T4 analysis windows
 - CLAUDE.md §6.4 and §6.5 updated with combined blocklist status
 
-### Pending — DV Exclusion Module (6 TODOs)
+### Pending — DV Exclusion Module (plan todos)
 
-- `confirm-rms-source` — Decide canonical RMS input path for T4 (`Acute_Crime/Data` vs AGOL/GDB export) and post-snake_case column names
-- `blocklist-pipeline` — Implement `case_number` standardization + anti-join to distinct `CaseNumber` from `dv_final_enriched.csv` (or minimal exported CSV)
-- `type-fallback` — Join `IncidentType1/2/3` to `incident_type_map.csv` + align strings with `CallType_Categories.csv` for DV-adjacent categories; define explicit include/exclude category list
-- `score-integration` — Apply DV exclusion mask before Tier 2 scoring and precursor correlation (Section 12); extend Data Quality Note with exclusion counts by reason (`dv_case_match` vs `type_fallback`)
-- `refresh-governance` — Document DV roster regeneration cadence; align `backfill_dv` `ValidationConfig` `date_end` with T4 windows
-- `cad-rms-qc-preflight` — (Optional) Run `cad_rms_data_quality` monthly validation on T4-window exports; evaluate ESRI-polished CAD baseline as T4 CAD source
+- `confirm-rms-source` — **Closed** in [Docs/t4_config_and_aliases.md](Docs/t4_config_and_aliases.md) (default local RMS vs AGOL)
+- `blocklist-pipeline` — **Closed** — `Data/dv_case_numbers_for_t4.csv` exists
+- `type-fallback` — **Pending code**
+- `score-integration` — **Pending code**
+- `refresh-governance` — **Closed** — [Docs/dv_blocklist_refresh_governance.md](Docs/dv_blocklist_refresh_governance.md)
+- `cad-rms-qc-preflight` — (Optional) Run `cad_rms_data_quality` when using raw exports
 
 ### Pending — Core Pipeline
 

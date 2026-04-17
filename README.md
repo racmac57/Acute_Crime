@@ -33,6 +33,8 @@ Analyze Hackensack PD CAD (Computer-Aided Dispatch) and RMS (Records Management 
 | Monthly exports | `Data/rms/monthly/YYYY_MM_RMS.xlsx` |
 | Yearly exports | `Data/rms/yearly/YYYY_ALL_RMS.xlsx` |
 
+**Canonical input (closed):** Default pipeline reads **local XLSX** under `Data/rms/`. Use the **AGOL / hosted Calls For Service** layer only when the run must match the published dashboard geometry and attributes exactly — see [Docs/t4_config_and_aliases.md](Docs/t4_config_and_aliases.md) and [CLAUDE.md §3](CLAUDE.md).
+
 **Key fields:** `CaseNumber`, `IncidentType1`, `IncidentType2`, `IncidentType3`, `UCRCode`, `FullAddress`, `IncidentDate`, `IncidentTime`, `Narrative`
 
 **Column name warning:** DV pipeline exports use `Case Number` (with space); T4 uses `CaseNumber`. Normalize both to `case_number` before any join.
@@ -47,15 +49,15 @@ Analyze Hackensack PD CAD (Computer-Aided Dispatch) and RMS (Records Management 
 | Normalization pattern | `backfill_dv.py` → `standardise_case_number()`, regex `^\d{2}-\d{6}$` |
 | PII policy | `C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\dv_doj\docs\pii_policy.md` |
 
-> **PII RULE:** Never copy `dv_final_enriched.csv` into the `Acute_Crime/` directory. Use a minimal derived file (`dv_case_numbers_for_t4.csv` — single `case_number` column + optional `source_file_date`) or a config path pointer. See `dv_doj/docs/pii_policy.md`.
+> **PII RULE:** Never copy `dv_final_enriched.csv` into the `Acute_Crime/` directory. Use **`Data/dv_case_numbers_for_t4.csv`** (PII-safe blocklist: `case_number`, `source`, `source_date_end`) — see [Docs/dv_blocklist_refresh_governance.md](Docs/dv_blocklist_refresh_governance.md). See `dv_doj/docs/pii_policy.md`.
 
-> **ROSTER LAG:** `backfill_dv` `ValidationConfig` currently ends `2025-12-31`. The DV roster must be regenerated before running any 2026 T4 analysis window.
+> **Upstream `dv_doj`:** `dv_final_enriched` row-level data historically ended **2025-10-29**; the project blocklist merges PDF supplements through **2026-04-16**. Refresh per [Docs/dv_blocklist_refresh_governance.md](Docs/dv_blocklist_refresh_governance.md) when new rosters ship.
 
 ### Supporting References
 
 | Source | Path |
 |--------|------|
-| Cycle definitions | `T4_Master_Reporting_Template.xlsx` — see CLAUDE.md §3 for resolved path (provides `cycle_id`, `ReportName`, 7-day/28-day labels) |
+| Cycle definitions | **Section 0 run parameters** supply `cycle_id` / cycle labels (see [Docs/t4_cycle_id_strategy.md](Docs/t4_cycle_id_strategy.md)). Reporting workbook path: [CLAUDE.md §3](CLAUDE.md) (`T4_Master_Reporting_Template.xlsx` — context only; `ReportName` may be `T4_Current` only). |
 | Personnel | `09_Reference/Personnel/Assignment_Master_GOLD.xlsx` |
 | Summons ETL output | `summons_slim_for_powerbi.csv` via `summons_etl_normalize.py` |
 | City ordinance complaints | `Data/city_ord/` |
@@ -78,23 +80,26 @@ Acute_Crime/
 │   │   ├── monthly/                           # YYYY_MM_CAD.xlsx
 │   │   └── yearly/                            # YYYY_CAD_ALL.xlsx
 │   ├── rms/
-│   │   ├── monthly/                           # YYYY_MM_RMS.xlsx (NOTE: 2026_02 is 0 bytes)
+│   │   ├── monthly/                           # YYYY_MM_RMS.xlsx
 │   │   └── yearly/                            # YYYY_ALL_RMS.xlsx
 │   ├── city_ord/                              # City ordinance complaint CSVs
 │   ├── summons/                               # E-ticket export CSVs
 │   ├── timereport/                            # Personnel shift data
 │   └── nibrs/                                 # (empty — pending)
 ├── Docs/
-│   └── plans/
-│       └── t4_rms_dv_filtering_d5a59b9b.plan.md  # DV exclusion implementation plan
-└── Scripts/                                   # (pending — ETL and scoring scripts)
+│   ├── plans/t4_rms_dv_filtering_d5a59b9b.plan.md
+│   ├── t4_cycle_id_strategy.md               # Closed: cycle_id from Section 0 run parameters
+│   ├── t4_config_and_aliases.md             # RMS source default + HourMinuetsCalc alias table
+│   ├── data_gaps.md                          # resolved / residual data notes
+│   └── dv_blocklist_refresh_governance.md
+└── Scripts/                                   # (optional — copy snippets from Docs/t4_config_and_aliases.md)
 ```
 
 ---
 
 ## How to Run
 
-**No production scripts exist yet.** The project is in design/documentation phase. When scripts are built:
+**Scoring engine:** Not built yet. **Design closes:** cycle IDs ([Docs/t4_cycle_id_strategy.md](Docs/t4_cycle_id_strategy.md)), RMS source default ([Docs/t4_config_and_aliases.md](Docs/t4_config_and_aliases.md)), DV blocklist (`Data/dv_case_numbers_for_t4.csv`). When scripts are built:
 
 ### Pre-Flight (Every Run)
 
@@ -148,7 +153,7 @@ Acute_Crime/
 | DV blocklist pipeline (`backfill_dv`) | `02_ETL_Scripts/dv_doj/` | Needs refresh past 2025-12-31 |
 | `incident_type_map.csv` | `02_ETL_Scripts/dv_doj/docs/mappings/` | Available |
 | `CallType_Categories.csv` | `09_Reference/Classifications/CallTypes/` | Available |
-| `T4_Master_Reporting_Template.xlsx` | Resolved — see CLAUDE.md §3 for full path | Required for cycle_id |
+| `T4_Master_Reporting_Template.xlsx` | Resolved — see CLAUDE.md §3 | Context workbook; **`cycle_id` from Section 0** — [Docs/t4_cycle_id_strategy.md](Docs/t4_cycle_id_strategy.md) |
 | `summons_etl_normalize.py` | Summons ETL pipeline | Available |
 | `Assignment_Master_GOLD.xlsx` | `09_Reference/Personnel/` | Available |
 
@@ -156,13 +161,12 @@ Acute_Crime/
 
 ## Known Data Gaps
 
-- `Data/rms/monthly/2026_02_RMS.xlsx` is 0 bytes (empty file)
-- `Data/nibrs/` is empty — no NIBRS data loaded
-- DV roster (`dv_final_enriched.csv`) ends 2025-12-31 — must be regenerated for 2026 windows
-- T4 Master workbook inspected 2026-04-16 — `ReportName` contains only `T4_Current`, not `T4_C01W02` cycle IDs. Cycle ID generation needed. See CLAUDE.md §4a.
-- DV roster (`dv_final_enriched.csv`) actual data ends **2025-10-29** — ~6 months short. `backfill_dv` refresh required before any T4 run.
-- T4 Master column names use spaces (`How Reported`, `Time of Call`) — snake_case normalization must handle both spaced and camelCase variants.
-- No production scoring scripts exist yet — all 6 implementation TODOs are pending
+Details: [Docs/data_gaps.md](Docs/data_gaps.md).
+
+- **`2026_02_RMS.xlsx`** — **Re-exported (2026-04-16); verified ~539 KB** — [Docs/data_gaps.md](Docs/data_gaps.md).
+- **`Data/nibrs/`** — empty (pending).
+- **T4 workbook** — `ReportName` = `T4_Current` only; structured **`cycle_id` comes from Section 0** per [Docs/t4_cycle_id_strategy.md](Docs/t4_cycle_id_strategy.md). Spaced headers; **`HourMinuetsCalc`** typo → alias in [Docs/t4_config_and_aliases.md](Docs/t4_config_and_aliases.md).
+- **Scoring code** — still pending; DV exclusion design is in [Docs/plans/t4_rms_dv_filtering_d5a59b9b.plan.md](Docs/plans/t4_rms_dv_filtering_d5a59b9b.plan.md).
 
 ---
 

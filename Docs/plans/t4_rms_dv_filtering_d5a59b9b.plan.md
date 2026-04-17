@@ -3,8 +3,8 @@ name: T4 RMS DV filtering
 overview: "Integrate T4 hotspot RMS preprocessing with a two-layer domestic violence filter: (1) standardized case-number anti-join against Acute_Crime/Data/dv_case_numbers_for_t4.csv (PII-safe blocklist; supplements dv_doj + PDF roster) and (2) fallback exclusion from mapped incident types, aligned to 09_Reference Standards and CallTypes conventions."
 todos:
   - id: confirm-rms-source
-    content: Decide canonical RMS input path for T4 (Acute_Crime/Data vs AGOL/GDB export) and column names after snake_case
-    status: pending
+    content: "Closed in docs — default local Data/rms XLSX; AGOL when matching dashboard (Docs/t4_config_and_aliases.md)"
+    status: completed
   - id: blocklist-pipeline
     content: "PII-safe blocklist artifact — Data/dv_case_numbers_for_t4.csv (1,536 case_number rows; dv_final_enriched + PDF supplement through 2026-04-16). Remaining — wire anti-join in scoring code (score-integration)"
     status: completed
@@ -15,8 +15,8 @@ todos:
     content: Apply exclusion before Tier 2 and precursor (Section 12); extend Data Quality Note with exclusion counts/reasons
     status: pending
   - id: refresh-governance
-    content: "Document refresh: regenerate DV roster when opening new calendar years / align backfill_dv ValidationConfig date_end with T4 windows"
-    status: pending
+    content: "Closed — Docs/dv_blocklist_refresh_governance.md; ongoing operator duty to refresh dv_case_numbers_for_t4.csv"
+    status: completed
   - id: cad-rms-qc-preflight
     content: "Optional upstream QC — run cad_rms_data_quality monthly validation on T4-window exports and/or use ESRI-polished CAD baseline (correct calldate, geometry) as T4 CAD source"
     status: pending
@@ -24,8 +24,8 @@ todos:
     content: "Gate 2 — Inspect T4_Master_Reporting_Template.xlsx (sheet names + headers for cycle_id, ReportName, 7-day/28-day fields); Standards repo does not define this workbook"
     status: completed
   - id: t4-cycle-id-strategy
-    content: "Design decision — workbook has ReportName=T4_Current only (no T4_C01W02-style IDs); choose cycle calendar lookup vs pipeline-generated cycle_id from run parameters; handle Excel serial time fields"
-    status: pending
+    content: "Closed — Docs/t4_cycle_id_strategy.md (Section 0 authoritative; optional future calendar YAML)"
+    status: completed
 isProject: false
 ---
 
@@ -145,7 +145,7 @@ Use **`current`** paths under [09_Reference/Standards](C:\Users\carucci_r\OneDri
 |------|------------|---------|
 | **1** | RMS export column names and `CaseNumber` pattern? | **Closed** — [rms_export_field_definitions.md](C:\Users\carucci_r\OneDrive - City of Hackensack\09_Reference\Standards\RMS\DataDictionary\current\schema\rms_export_field_definitions.md): `CaseNumber`, `IncidentType1/2/3`, dates/times, `FullAddress`, `Zone`, `Grid`, `NIBRSClassification`, `TotalValueStolen`, `OfficerOfRecord`, `CaseStatus`, etc. Case number regex aligns with `dv_doj` (`^\d{2}-\d{6}([A-Z])?$` per Standards doc). |
 | **2** | Sheet names / columns for cycle workbook? | **Inspection complete** (Claude Code) — **11 sheets**; **`09_Reference/Standards` still does not define** this file. **New finding:** `ReportName` is **`T4_Current` only** — **no** `T4_C01W02`-style cycle IDs in the workbook. **Pipeline blocker:** implement either a **date-range → cycle_id lookup** (cycle calendar), or **generate** `cycle_id` / labels from **Section 0 run parameters**; master prompt naming must stay consistent with command briefings. **Also:** column names use **spaces**; time fields may be **Excel serials** — normalize in code. Optional: promote structural dump to Standards (see subsection below). Todo `inspect-t4-master-workbook` → **done**; follow-up todo **`t4-cycle-id-strategy`**. |
-| **3a** | Feb 2026 RMS file? | **Confirmed** — `2026_02_RMS.xlsx` is a **0-byte placeholder**; February RMS data **does not exist** in `Acute_Crime/Data`. |
+| **3a** | Feb 2026 RMS file? | **Resolved (2026-04-16)** — `2026_02_RMS.xlsx` **539 KB** (verified). [Docs/data_gaps.md](../data_gaps.md). |
 | **3b** | DV roster / blocklist coverage? | **Closed for T4 anti-join (2026-04-16)** — [Data/dv_case_numbers_for_t4.csv](C:\Users\carucci_r\OneDrive - City of Hackensack\10_Projects\Acute_Crime\Data\dv_case_numbers_for_t4.csv): **1,536** unique `case_number` values, columns `case_number`, `source`, `source_date_end`. **Sources:** `dv_final_enriched.csv` (1,322 cases through **2025-10-29**) **+** PDF extraction from `2025_10_29_to_2026_04_16_DV_roster.pdf` (**214** additional cases). **Coverage span:** 2023-01-01 through **2026-04-16**. **Type fallback** remains recommended for RMS rows not yet on any roster. Ongoing: refresh this file when new DV PDFs/ETL drops arrive (`refresh-governance`). |
 | **4** | Derive `UCRCode` / NIBRS from `IncidentType1` (master prompt §3.5)? | **Closed** — [rms_to_nibrs_offense_map.json](C:\Users\carucci_r\OneDrive - City of Hackensack\09_Reference\Standards\NIBRS\DataDictionary\current\mappings\rms_to_nibrs_offense_map.json) (~85 RMS incident types → NIBRS with confidence) plus [ucr_offense_classification.json](C:\Users\carucci_r\OneDrive - City of Hackensack\09_Reference\Standards\NIBRS\DataDictionary\current\schema\ucr_offense_classification.json) (NCIC ↔ NIBRS). No new mapping file required for baseline Tier 2 logic. |
 
@@ -194,7 +194,7 @@ Session output (doc + gate work + blocklist extraction):
 - **Gates:** 1–4 closed per inspection; **Gate 3b** superseded by project blocklist file (above).
 - **Blocklist:** [dv_case_numbers_for_t4.csv](C:\Users\carucci_r\OneDrive - City of Hackensack\10_Projects\Acute_Crime\Data\dv_case_numbers_for_t4.csv) — production **anti-join** input; details in **CLAUDE.md §4a, §6, §23**.
 - **Blocker:** **`t4-cycle-id-strategy`** — master prompt cycle labels (`T4_C01W02`) not present in workbook (`T4_Current` only).
-- **Still flagged:** `2026_02_RMS.xlsx` (0 bytes); **`confirm-rms-source`**; implement **`score-integration`** + **`type-fallback`** using Standards mappings.
+- **Still flagged:** implement **`score-integration`** + **`type-fallback`** using Standards mappings (`confirm-rms-source` closed in docs).
 
 ---
 
@@ -215,15 +215,14 @@ Core docs:
 
 | Item | Status |
 |------|--------|
-| **`t4-cycle-id-strategy` (post–Gate 2)** | **Primary blocker** — no `T4_C01W02`-style IDs in workbook; choose calendar vs code-generated vs new sheet (options A–C above). Normalize Excel serial times and spaced headers; map typo fields (e.g. `HourMinuetsCalc`). |
-| **`confirm-rms-source`** | Pending — canonical RMS input: local `Data/rms/` XLSX vs AGOL/GDB. |
-| **Feb 2026 RMS (Gate 3a)** | 0-byte placeholder — re-export or document gap. |
-| **DV blocklist → code** | Blocklist CSV **exists** (`blocklist-pipeline` done). **`score-integration`** must load it + apply exclusion before Tier 2 / precursor. |
-| **`type-fallback`** | Pending — join `IncidentType*` to `incident_type_map` + DV-adjacent categories. |
-| **UCRCode / NIBRS (Gate 4)** | **Closed in Standards** — implement reads from `rms_to_nibrs_offense_map.json` + `ucr_offense_classification.json`. |
-| **`refresh-governance`** | Refresh `dv_case_numbers_for_t4.csv` when new DV PDFs or `dv_doj` outputs ship; document lineage. |
+| **`score-integration` / `type-fallback`** | **Build** — Python (or ArcPy) pipeline: load `dv_case_numbers_for_t4.csv`, `standardise_case_number`, anti-join RMS; type fallback via `incident_type_map.csv`; DQ counts. *YAML/config snippets:* [Docs/t4_config_and_aliases.md](t4_config_and_aliases.md) (Agent mode can add `config/` + `Scripts/`). |
+| **Feb 2026 RMS (Gate 3a)** | **Resolved** — re-exported; verify file — [Docs/data_gaps.md](data_gaps.md). |
+| **UCRCode / NIBRS (Gate 4)** | **Closed in Standards** — wire code to JSON paths in [Docs/t4_config_and_aliases.md](t4_config_and_aliases.md). |
+| **`cad-rms-qc-preflight`** | Optional — run `cad_rms_data_quality` validators when using raw exports. |
 | **`dv_doj` lineage doc** | Optional `DATA_LINEAGE.md` in `dv_doj`. |
 | **CAD-side DV filter** | Optional (CLAUDE §6.7). |
+
+**Closed via docs (2026-04-16):** `t4-cycle-id-strategy`, `confirm-rms-source`, `refresh-governance` (governance doc), **`HourMinuetsCalc`** alias table ([Docs/t4_config_and_aliases.md](t4_config_and_aliases.md)).
 
 ### Config / implementation
 

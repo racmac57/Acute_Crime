@@ -20,9 +20,9 @@ T4 Hotspot Analysis is a production-grade, cycle-aligned crime analysis pipeline
 
 ## 2. Project Status
 
-**Design:** Complete (Master Prompt v3 + DV Exclusion Plan).
-**Implementation:** No production scripts exist. All 6 implementation TODOs are pending.
-**Data:** CAD and RMS exports available in `Data/` for 2024-2026. DV blocklist available externally but roster ends 2025-12-31 — must be regenerated for 2026 runs.
+**Design:** Complete (Master Prompt v3 + DV Exclusion Plan + [Docs/t4_cycle_id_strategy.md](Docs/t4_cycle_id_strategy.md)).
+**Implementation:** Scoring engine not built; **closed decisions:** cycle IDs (Section 0), canonical RMS default (local `Data/rms/` vs AGOL — [Docs/t4_config_and_aliases.md](Docs/t4_config_and_aliases.md)), DV blocklist at `Data/dv_case_numbers_for_t4.csv`.
+**Data:** CAD/RMS layouts under `Data/`; **`dv_case_numbers_for_t4.csv`** through 2026-04-16; refresh per [Docs/dv_blocklist_refresh_governance.md](Docs/dv_blocklist_refresh_governance.md).
 
 ---
 
@@ -73,7 +73,7 @@ Every analysis run requires these parameters populated before any processing beg
 |-----------|--------|-------------|
 | `run_date` | YYYY-MM-DD | Execution date |
 | `operator` | string | R. A. Carucci or delegated analyst name |
-| `cycle_id` | string | From T4 Master workbook (e.g., `T4_C01W02`) — **mandatory on all outputs** |
+| `cycle_id` | string | **Section 0 / analyst entry** (e.g. `T4_C01W02`) — **mandatory on all outputs**. *Not* read from `T4_Master_Reporting_Template.xlsx` `ReportName` (currently `T4_Current` only) — see [Docs/t4_cycle_id_strategy.md](Docs/t4_cycle_id_strategy.md). |
 | `cad_pull_start` | YYYY-MM-DD | Start of CAD data window |
 | `cad_pull_end` | YYYY-MM-DD | End of CAD data window |
 | `rms_pull_start` | YYYY-MM-DD | Same window as CAD |
@@ -108,7 +108,7 @@ Every analysis run requires these parameters populated before any processing beg
 - CAD columns use **spaces** in names: `How Reported`, `Time of Call`, `Time Dispatched`, `Time Out`, `Time In`, `Time Spent`, `Time Response`, `Response Type`. Snake_case normalization must handle both spaced and camelCase variants.
 - Time fields are **Excel serial numbers** (e.g., `45784.0981712963`), not text datetime strings.
 - `cYear` is text string (e.g., `"2025"`), `cMonth` is month name (e.g., `"May"`).
-- `HourMinuetsCalc` (note: misspelled "Minuets") contains `HH:MM` strings.
+- `HourMinuetsCalc` (note: misspelled "Minuets") contains `HH:MM` strings — map to canonical snake_case per [Docs/t4_config_and_aliases.md](Docs/t4_config_and_aliases.md) (e.g. `hour_minuets_calc`).
 
 ---
 
@@ -410,7 +410,7 @@ Targets are guidelines, not quotas. Do not pad weak locations to fill a target.
 - **Current 28-day cycle** — e.g., `T4_C01`
 - **YTD**
 
-Use `ReportName` from the T4 Master workbook as canonical cycle identifier. Never invent arbitrary date windows. Populate `cycle_7day` and `cycle_28day` from Run Parameters before any output.
+Use **`cycle_id` / cycle labels from Section 0 run parameters** (aligned with command’s `T4_Master.xlsx` scheduling practice). The reporting workbook’s `ReportName` may be only `T4_Current` — do not use it as the pipeline cycle key. Never invent arbitrary date windows. Populate `cycle_7day` and `cycle_28day` from Run Parameters before any output. See [Docs/t4_cycle_id_strategy.md](Docs/t4_cycle_id_strategy.md).
 
 ---
 
@@ -626,7 +626,7 @@ All implementation work is tracked here. Do not mark any TODO complete until cod
 
 ## 24. Known Data Issues
 
-- `Data/rms/monthly/2026_02_RMS.xlsx` is 0 bytes (empty file) — investigate whether data is missing or month had no RMS exports
+- `Data/rms/monthly/2026_02_RMS.xlsx` — **re-exported 2026-04-16** (was 0-byte placeholder); **verified ~539 KB** — [Docs/data_gaps.md](Docs/data_gaps.md)
 - `Data/nibrs/` is empty
 - DV roster ends 2025-12-31 — regenerate before 2026 runs
 - **T4 Master workbook** — inspected 2026-04-16. `ReportName` column contains only `T4_Current`, not structured `T4_C01W02` cycle IDs. Cycle ID generation must be built into pipeline code or sourced from a separate cycle calendar. See §4a for full sheet/column inventory.
@@ -672,7 +672,7 @@ Do not alter the following without explicit instruction from the operator (R. A.
 
 ### Output Integrity
 
-- All outputs must include `cycle_id`. Before writing any output CSV or feature class, assert `cycle_id` is populated from the T4 Master workbook. If null, halt.
+- All outputs must include `cycle_id`. Before writing any output CSV or feature class, assert `cycle_id` is populated from **Section 0 run parameters** (not from reporting workbook `ReportName` unless org later syncs them). If null, halt.
 - Output schema must match the 28-field specification in Section 17 of this document.
 
 ### Design Preservation

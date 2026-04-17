@@ -1,0 +1,6 @@
+rank,location,tier1_sum,raw_count,citizen_incidents_current_cycle,tier2_sum,rms_part1_count,location_boost,weighted_score,self_init_count,cycle_id,cycle_7day,cycle_28day,SingleLine
+1,"324 Main Street, Hackensack, NJ, 07601",2.0,1,1,7.0,1,1.0,9.0,0,T4_C01W02,T4_C01W02,T4_C01,"324 Main Street, Hackensack, NJ, 07601"
+2,"380 West Pleasantview Avenue , Hackensack, NJ, 07601",2.0,1,1,7.0,1,1.0,9.0,0,T4_C01W02,T4_C01W02,T4_C01,"380 West Pleasantview Avenue , Hackensack, NJ, 07601"
+3,"188 Hudson Street, Hackensack, NJ, 07601",1.0,1,1,7.0,1,1.0,8.0,6,T4_C01W02,T4_C01W02,T4_C01,"188 Hudson Street, Hackensack, NJ, 07601"
+4,"15 Lehigh Street, Hackensack, NJ, 07601",5.0,2,2,0.0,0,1.0,5.0,0,T4_C01W02,T4_C01W02,T4_C01,"15 Lehigh Street, Hackensack, NJ, 07601"
+5,"193 Essex Street, Hackensack, NJ, 07601",5.0,2,2,0.0,0,1.0,5.0,2,T4_C01W02,T4_C01W02,T4_C01,"193 Essex Street, Hackensack, NJ, 07601"

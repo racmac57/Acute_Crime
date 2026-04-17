@@ -1,0 +1,6 @@
+{
+  "cycle_id": "T4_C01W02",
+  "source_scored_locations": "Output\\T4_C01W02\\T4_C01W02_scored_locations.csv",
+  "top_n": 5,
+  "note": "Geocode SingleLine or location in ArcGIS Pro; symbolize by rank or weighted_score."
+}

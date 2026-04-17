@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>T4 Top 5 Citywide Hotspot Locations</title>
+<style>
+:root { --navy: #0d233c; }
+body { margin: 0; font-family: "Segoe UI", Arial, sans-serif; background: #e5e7eb; color: #222; }
+.shell { max-width: 960px; margin: 16px auto; background: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,.08); padding: 20px 24px; }
+.header { border-bottom: 3px solid var(--navy); padding-bottom: 10px; margin-bottom: 16px; }
+.eyebrow { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #555; }
+h1 { margin: 0; font-size: 22px; color: var(--navy); text-transform: uppercase; letter-spacing: .04em; }
+.sub { font-size: 13px; color: #444; margin-top: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #ddd; vertical-align: top; }
+th { background: var(--navy); color: #fff; font-weight: 600; }
+.rank { width: 36px; font-weight: 700; color: var(--navy); }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+.note { margin-top: 18px; font-size: 11px; color: #444; line-height: 1.45; }
+@media print { body { background: #fff; } .shell { box-shadow: none; } }
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="header">
+    <div class="eyebrow">Hackensack Police Department · T4</div>
+    <h1>Top 5 hotspot locations (citywide)</h1>
+    <div class="sub">Cycle <strong>T4_C01W02</strong> · Ranked by <code>weighted_score</code>
+    (DV-filtered RMS + Tier 1 CAD). Location key = raw address text.</div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th><th>Location</th><th>Weighted score</th><th>Tier 1 sum</th><th>Tier 2 sum</th><th>RMS Part 1</th><th>Quick map</th>
+      </tr>
+    </thead>
+    <tbody>
+<tr>
+    <td class="rank">1</td>
+    <td class="addr">324 Main Street, Hackensack, NJ, 07601</td>
+    <td class="num">9.00</td>
+    <td class="num">2.00</td>
+    <td class="num">7.00</td>
+    <td class="num">1</td>
+    <td><a href="https://www.google.com/maps/search/?api=1&query=324%20Main%20Street%2C%20Hackensack%2C%20NJ%2C%2007601" target="_blank" rel="noopener">Map</a></td>
+</tr>
+<tr>
+    <td class="rank">2</td>
+    <td class="addr">380 West Pleasantview Avenue , Hackensack, NJ, 07601</td>
+    <td class="num">9.00</td>
+    <td class="num">2.00</td>
+    <td class="num">7.00</td>
+    <td class="num">1</td>
+    <td><a href="https://www.google.com/maps/search/?api=1&query=380%20West%20Pleasantview%20Avenue%20%2C%20Hackensack%2C%20NJ%2C%2007601" target="_blank" rel="noopener">Map</a></td>
+</tr>
+<tr>
+    <td class="rank">3</td>
+    <td class="addr">188 Hudson Street, Hackensack, NJ, 07601</td>
+    <td class="num">8.00</td>
+    <td class="num">1.00</td>
+    <td class="num">7.00</td>
+    <td class="num">1</td>
+    <td><a href="https://www.google.com/maps/search/?api=1&query=188%20Hudson%20Street%2C%20Hackensack%2C%20NJ%2C%2007601" target="_blank" rel="noopener">Map</a></td>
+</tr>
+<tr>
+    <td class="rank">4</td>
+    <td class="addr">15 Lehigh Street, Hackensack, NJ, 07601</td>
+    <td class="num">5.00</td>
+    <td class="num">5.00</td>
+    <td class="num">0.00</td>
+    <td class="num">0</td>
+    <td><a href="https://www.google.com/maps/search/?api=1&query=15%20Lehigh%20Street%2C%20Hackensack%2C%20NJ%2C%2007601" target="_blank" rel="noopener">Map</a></td>
+</tr>
+<tr>
+    <td class="rank">5</td>
+    <td class="addr">193 Essex Street, Hackensack, NJ, 07601</td>
+    <td class="num">5.00</td>
+    <td class="num">5.00</td>
+    <td class="num">0.00</td>
+    <td class="num">0</td>
+    <td><a href="https://www.google.com/maps/search/?api=1&query=193%20Essex%20Street%2C%20Hackensack%2C%20NJ%2C%2007601" target="_blank" rel="noopener">Map</a></td>
+</tr>
+    </tbody>
+  </table>
+  <p class="note">
+    <strong>ArcGIS Pro:</strong> import <code>T4_C01W02_top5_hotspots_for_arcgis.csv</code> — geocode
+    <code>SingleLine</code>, symbolize by rank. <strong>Reference assets</strong> (DV layouts, sample CSVs, .aprx):
+    <code>Imported_from_sandbox/dv_doj_arcgis_exports/</code>. <strong>Map</strong> links are public basemap search only.
+  </p>
+</div>
+</body>
+</html>

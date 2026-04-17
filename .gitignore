@@ -13,6 +13,9 @@ Data/*.pdf
 # Scoring pipeline outputs (CSV + JSON per cycle_id)
 Output/
 
+# Sandbox mirror — ArcGIS Pro project + GDB + DV exports (~40MB +)
+Imported_from_sandbox/
+
 # OS / editor
 .DS_Store
 Thumbs.db

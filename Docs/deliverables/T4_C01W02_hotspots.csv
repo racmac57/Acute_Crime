@@ -1,0 +1,30 @@
+location,post,pdzone,grid,latitude,longitude,weighted_score,raw_count,self_init_count,rms_part1_count,risk_level,classification,top_call_types,time_pattern,dow_pattern,trend_pct,precursor_pattern,precursor_cases,displacement_flag,displacement_candidate,confidence,source_reports,last_incident_date,unique_officers,cycle_7day,cycle_28day,data_quality_flags,cycle_id
+100 Block Polifly Rd,,,,,,7.5,3,0,0,Low,Persistent,Suspicious Incident,,,0.0,None,,False,,Medium,,2026-03-14,0,T4_C01W02,T4_C01,,T4_C01W02
+300 Block West Pleasantview Ave,,,,,,7.0,0,0,1,Low,One-off,,,,0.0,None,,False,,Low,,,0,T4_C01W02,T4_C01,,T4_C01W02
+300 Block River St,,,,,,5.0,2,0,0,Low,One-off,Suspicious Person;Fight - Unarmed,,,0.0,None,,False,,Low,,2026-03-13,0,T4_C01W02,T4_C01,,T4_C01W02
+100 Block English St,,,,,,4.0,2,0,0,Low,One-off,Suspicious Person,,,0.0,None,,False,,Low,,2026-03-11,0,T4_C01W02,T4_C01,,T4_C01W02
+100 Block University Plaza Dr,,,,,,3.0,1,0,0,Low,One-off,Fight - Unarmed,,,0.0,None,,False,,Low,,2026-03-09,0,T4_C01W02,T4_C01,,T4_C01W02
+300 Block Second St,,,,,,3.0,1,0,0,Low,One-off,Fight - Unarmed,,,0.0,None,,False,,Low,,2026-03-09,0,T4_C01W02,T4_C01,,T4_C01W02
+400 Block Main St,,,,,,3.0,2,0,0,Low,One-off,City Ordinance;Suspicious Vehicle,,,0.0,None,,False,,Low,,2026-03-13,0,T4_C01W02,T4_C01,,T4_C01W02
+0 Block Lehigh St,,,,,,2.0,1,0,0,Low,One-off,Suspicious Person,,,0.0,None,,False,,Low,,2026-03-11,0,T4_C01W02,T4_C01,,T4_C01W02
+100 Block Clay St,,,,,,2.0,1,0,0,Low,One-off,Suspicious Incident,,,0.0,None,,False,,Low,,2026-03-09,0,T4_C01W02,T4_C01,,T4_C01W02
+0 Block Union St,,,,,,2.0,1,0,0,Low,One-off,Suspicious Vehicle,,,0.0,None,,False,,Low,,2026-03-09,0,T4_C01W02,T4_C01,,T4_C01W02
+0 Block Lodi St,,,,,,2.0,1,0,0,Low,One-off,Suspicious Person,,,0.0,None,,False,,Low,,2026-03-14,0,T4_C01W02,T4_C01,,T4_C01W02
+0 Block First St,,,,,,2.0,1,0,0,Low,One-off,Suspicious Incident,,,0.0,None,,False,,Low,,2026-03-13,0,T4_C01W02,T4_C01,,T4_C01W02
+0 Block Banta Pl,,,,,,2.0,1,0,0,Low,One-off,Suspicious Person,,,0.0,None,,False,,Low,,2026-03-13,0,T4_C01W02,T4_C01,,T4_C01W02
+400 Block River St,,,,,,2.0,1,0,0,Low,One-off,Suspicious Person,,,0.0,None,,False,,Low,,2026-03-14,0,T4_C01W02,T4_C01,,T4_C01W02
+200 Block Prospect Ave,,,,,,2.0,1,0,0,Low,One-off,Suspicious Incident,,,0.0,None,,False,,Low,,2026-03-14,0,T4_C01W02,T4_C01,,T4_C01W02
+200 Block Berry St,,,,,,2.0,1,0,0,Low,One-off,Suspicious Incident,,,0.0,None,,False,,Low,,2026-03-12,0,T4_C01W02,T4_C01,,T4_C01W02
+100 Block Prospect Ave,,,,,,2.0,0,0,1,Low,One-off,,,,0.0,None,,False,,Low,,,0,T4_C01W02,T4_C01,,T4_C01W02
+300 Block Hudson St,,,,,,2.0,1,0,0,Low,One-off,Suspicious Person,,,0.0,None,,False,,Low,,2026-03-11,0,T4_C01W02,T4_C01,,T4_C01W02
+300 Block Lookout Ave,,,,,,2.0,1,0,0,Low,One-off,Suspicious Vehicle,,,0.0,None,,False,,Low,,2026-03-12,0,T4_C01W02,T4_C01,,T4_C01W02
+400 Block Hackensack Ave,,,,,,2.0,1,0,0,Low,One-off,Suspicious Vehicle,,,0.0,None,,False,,Low,,2026-03-08,0,T4_C01W02,T4_C01,,T4_C01W02
+400 Block Heath Pl,,,,,,2.0,1,0,0,Low,One-off,Suspicious Vehicle,,,0.0,None,,False,,Low,,2026-03-10,0,T4_C01W02,T4_C01,,T4_C01W02
+Camden St & Main St,,,,,,2.0,1,0,0,Low,One-off,Suspicious Incident,,,0.0,None,,False,,Low,,2026-03-12,0,T4_C01W02,T4_C01,,T4_C01W02
+400 Block Washington Ave,,,,,,2.0,1,0,0,Low,One-off,Suspicious Incident,,,0.0,None,,False,,Low,,2026-03-13,0,T4_C01W02,T4_C01,,T4_C01W02
+Arcadia Rd & Essex St,,,,,,2.0,1,0,0,Low,One-off,Suspicious Vehicle,,,0.0,None,,False,,Low,,2026-03-13,0,T4_C01W02,T4_C01,,T4_C01W02
+Broadway & Hudson St,,,,,,2.0,1,0,0,Low,One-off,Suspicious Person,,,0.0,None,,False,,Low,,2026-03-11,0,T4_C01W02,T4_C01,,T4_C01W02
+Euclid Ave & Prospect Ave,,,,,,2.0,1,0,0,Low,One-off,Suspicious Vehicle,,,0.0,None,,False,,Low,,2026-03-13,0,T4_C01W02,T4_C01,,T4_C01W02
+Club Way & Maple Hill Dr,,,,,,2.0,1,0,0,Low,One-off,Suspicious Vehicle,,,0.0,None,,False,,Low,,2026-03-10,0,T4_C01W02,T4_C01,,T4_C01W02
+Memorial Way & Temple Ave,,,,,,2.0,1,0,0,Low,One-off,Suspicious Incident,,,0.0,None,,False,,Low,,2026-03-12,0,T4_C01W02,T4_C01,,T4_C01W02
+100 Block Van Olst St,,,,,,1.0,1,0,0,Low,One-off,City Ordinance,,,0.0,None,,False,,Low,,2026-03-11,0,T4_C01W02,T4_C01,,T4_C01W02

@@ -1,11 +1,14 @@
 {
   "last_active_file": {
-    "path": "C:\\Users\\carucci_r\\OneDrive - City of Hackensack\\10_Projects\\Acute_Crime\\Docs\\deliverables\\T4_C01W02_top5_hotspots_citywide.html",
-    "section": "T4 top-5 deliverable; address/weighting caveats"
+    "path": "C:\\Users\\carucci_r\\OneDrive - City of Hackensack\\10_Projects\\Acute_Crime\\Docs\\deliverables\\T4_C01W02_hotspots.csv",
+    "section": "T4_C01W02 closeout — 28-field Section 16 hotspot CSV promoted from _overnight/integration_out/"
   },
-  "last_completed_task": "Top-5 hotspots HTML+CSV; export_top5_hotspots_html.py; Sandbox dv_doj arcgis_exports copied to Imported_from_sandbox (gitignored); CAD 2024/2025 yearly disposition review; CAD cleaning engine vs cad_rms_data_quality disposition alignment documented.",
-  "next_task_in_progress_or_queued": "Optional: CAD disposition weighting for Tier 1; CAD_Data_Cleaning_Engine Sandbox→OneDrive sync per handoff prompt; validate-monthly on T4 CAD/RMS window.",
+  "last_completed_task": "T4_C01W02 overnight closeout: wired B->A->C integration, 95 tests green, promoted hotspots CSV + DQ note + integration report to Docs/deliverables/.",
+  "next_task_in_progress_or_queued": "Refresh 05_EXPORTS/_RMS/monthly/2026/2026_02_RMS.xlsx (0-byte stub); spatial-join fallback for pdzone/grid/lat/lon; decide on T4_C01 28-day run.",
   "unresolved_errors_warnings_decisions": [
+    "05_EXPORTS/_RMS/monthly/2026/2026_02_RMS.xlsx is 0 bytes; valid file lives under Acute_Crime/Data/rms/monthly/2026_02_RMS.xlsx — upstream sync needs a refresh before monthly/28-day rollup.",
+    "Hotspot CSV post/pdzone/grid/latitude/longitude left blank — §5.5 spatial-join fallback deferred.",
+    "DV Layer 1 rescue audit shows 0 rescued matches this cycle (data was already clean); plumbing retained for future cycles with legacy case-number forms.",
     "2024_CAD_ALL: ~6% empty disposition vs ~0.15% for 2025 — affects disposition-based rules on 2024 pulls.",
     "Tier 1 scoring ignores disposition until implemented; cad_rms_data_quality DispositionValidator + enhanced_esri mapping are upstream integration targets.",
     "score_integration PATHS hardcoded to OneDrive Acute_Crime — add CLI overrides if running elsewhere.",

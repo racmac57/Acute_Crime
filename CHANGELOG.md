@@ -8,6 +8,11 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added (2026-04-19 — repoint DV GDB to OneDrive TEMP)
+
+- `T4_2026_ArcGIS/scripts/repoint_dv_gdb_to_onedrive_temp.py` — `ArcGISProject.updateConnectionProperties` from `C:\TEMP\DV_Analysis\dv_doj.gdb` to mirrored `...\OneDrive - City of Hackensack\TEMP\DV_Analysis\dv_doj.gdb`; default save-as `T4_2026_ArcGIS_onedrive_temp.aprx`
+- [Docs/T4_ArcGIS_data_paths_and_TEMP_mirror.md](Docs/T4_ArcGIS_data_paths_and_TEMP_mirror.md) + [CLAUDE.md](CLAUDE.md) §20 updated
+
 ### Added (2026-04-19 — ArcGIS paths & TEMP mirror documentation)
 
 - [Docs/T4_ArcGIS_data_paths_and_TEMP_mirror.md](Docs/T4_ArcGIS_data_paths_and_TEMP_mirror.md) — `C:\TEMP\DV_Analysis\dv_doj.gdb` vs laptop; `audit_aprx_data_sources.py` / `repair_aprx_data_sources.py`; robocopy mirror + scheduled task `Mirror_C_TEMP_to_OneDrive_TEMP` under `T4_2026_ArcGIS/automation/`

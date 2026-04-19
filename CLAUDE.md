@@ -573,6 +573,7 @@ Append a Data Quality Note to every output:
 |--------|---------|
 | `audit_aprx_data_sources.py` | Exports layer/table data sources to JSON (`datasource_manifest.json`) for cross-machine comparison. |
 | `repair_aprx_data_sources.py` | Batch `updateConnectionProperties` (e.g. `C:\TEMP\...\dv_doj.gdb` → OneDrive `TEMP\...`); writes `*_repaired.aprx`. |
+| `repoint_dv_gdb_to_onedrive_temp.py` | Fixed pair: `C:\TEMP\DV_Analysis\dv_doj.gdb` → `%USERPROFILE%\OneDrive - City of Hackensack\TEMP\DV_Analysis\dv_doj.gdb`; optional in-place save. |
 
 **`C:\TEMP` → OneDrive `\TEMP` mirror:** `T4_2026_ArcGIS/automation/mirror_c_temp_to_onedrive.ps1`, optional **Task Scheduler** task `Mirror_C_TEMP_to_OneDrive_TEMP` — full detail in [Docs/T4_ArcGIS_data_paths_and_TEMP_mirror.md](Docs/T4_ArcGIS_data_paths_and_TEMP_mirror.md).
 

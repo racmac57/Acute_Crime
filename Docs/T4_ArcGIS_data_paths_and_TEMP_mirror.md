@@ -2,7 +2,7 @@
 
 **Purpose:** Document why `T4_2026_ArcGIS.aprx` layers break across machines, how to audit/repair sources in ArcGIS Pro, and how the **`C:\TEMP`** → **OneDrive `\TEMP`** robocopy mirror is automated.
 
-**Last updated:** 2026-04-19
+**Last updated:** 2026-04-19 (added `repoint_dv_gdb_to_onedrive_temp.py`)
 
 ---
 
@@ -26,7 +26,7 @@ Operational map layers were authored against a **file geodatabase** under **`C:\
 **Mitigations (pick one or combine):**
 
 1. **Mirror `C:\TEMP` into OneDrive `\TEMP`** (see §4) so the laptop has  
-   `{OneDrive}\TEMP\DV_Analysis\dv_doj.gdb\...`, then use **`repair_aprx_data_sources.py`** (or `Scripts/t4/arcgis/reconnect_layers.py`) to repoint from `C:\TEMP\...` to the OneDrive path.
+   `{OneDrive}\TEMP\DV_Analysis\dv_doj.gdb\...`, then run **`repoint_dv_gdb_to_onedrive_temp.py`** for a one-shot workspace swap, or use **`repair_aprx_data_sources.py`** / **`Scripts/t4/arcgis/reconnect_layers.py`** for custom path pairs.
 2. **Project → Options → Current settings:** enable **Store relative pathnames to data sources** and keep the GDB under the same folder tree as the `.aprx`.
 3. **Package Project** (`.ppkx`) if you need a fully self-contained handoff.
 
@@ -40,8 +40,11 @@ Scripts live in **`T4_2026_ArcGIS/scripts/`**:
 |--------|------|
 | `audit_aprx_data_sources.py` | Walks maps/layers/tables; writes `datasource_manifest.json` next to the `.aprx` (or path you pass). |
 | `repair_aprx_data_sources.py` | Applies `PATH_REPLACEMENTS` via `ArcGISProject.updateConnectionProperties`; saves `T4_2026_ArcGIS_repaired.aprx` by default. |
+| `repoint_dv_gdb_to_onedrive_temp.py` | Replaces **`C:\TEMP\DV_Analysis\dv_doj.gdb`** with **`%USERPROFILE%\OneDrive - City of Hackensack\TEMP\DV_Analysis\dv_doj.gdb`** project-wide; writes `T4_2026_ArcGIS_onedrive_temp.aprx` unless `SAVE_IN_PLACE = True` or `--save`. Requires the mirrored GDB to exist when `VALIDATE_NEW_PATH` is True. |
 
-**Python window:** Pasting a script does **not** define `__file__`. Both scripts use a **`T4_ROOT_FALLBACK`** under this repo; edit it if your clone path differs, or run the script with **Run Script** / `propy.bat` so `__file__` resolves.
+**Python window:** Pasting a script does **not** define `__file__`. These scripts use a **`T4_ROOT_FALLBACK`** under this repo; edit it if your clone path differs, or run the script with **Run Script** / `propy.bat` so `__file__` resolves.
+
+**OneDrive TEMP repoint (typical laptop workflow):** After the mirror has populated `...\TEMP\DV_Analysis\dv_doj.gdb`, open ArcGIS Pro, run `repoint_dv_gdb_to_onedrive_temp.py`, open the generated `*_onedrive_temp.aprx` to confirm layers, then set **`SAVE_IN_PLACE = True`** (or pass **`--save`**) and run again to overwrite the main `.aprx`, or **Save As** from Pro.
 
 **Repair config:** In `repair_aprx_data_sources.py`, set pairs such as:
 

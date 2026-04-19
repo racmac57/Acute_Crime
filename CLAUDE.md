@@ -4,7 +4,7 @@ This file is the complete agent-ready reference for the T4 Hotspot Analysis syst
 
 **Project owner:** R. A. Carucci #261, Principal Analyst — Safe Streets Operations Control Center (SSOCC), Hackensack Police Department, NJ.
 
-**Last updated:** 2026-04-17
+**Last updated:** 2026-04-19
 
 > **Filename note:** The Master Prompt references `T4_Master.xlsx`. The operational file on disk is **`T4_Master_Reporting_Template.xlsx`** (full path in §3 External Dependencies). Both names refer to the same cycle-definition workbook. Prose references to `T4_Master.xlsx` in this file follow the master prompt's naming convention; scripts must use the actual filename.
 
@@ -25,6 +25,7 @@ T4 Hotspot Analysis is a production-grade, cycle-aligned crime analysis pipeline
 **Data:** CAD/RMS layouts under `Data/`; **`dv_case_numbers_for_t4.csv`** through 2026-04-16; refresh per [Docs/dv_blocklist_refresh_governance.md](Docs/dv_blocklist_refresh_governance.md).
 **ArcGIS Operationalization (2026-04-17):** Style transfer from `dv_doj.aprx` into `T4_2026_ArcGIS` validated 4/4 PASS. `T4 Persistent Hotspots (All Cycles)` layer geocoded and loaded (10 locations, graduated color by `persistent_risk_score`). ArcPy scripts for layer reconnect and hotspot loading are committed under `Scripts/t4/arcgis/`. Methodology summary HTML deliverable added to `Docs/deliverables/`.
 **Briefing package (2026-04-17):** Map companion HTML files, methodology summary, command-staff brief, verbal brief, and next-cycle checklist are committed and pushed to `origin/main`.
+**ArcGIS paths & TEMP mirror (2026-04-19):** Documented `C:\TEMP\DV_Analysis\dv_doj.gdb` vs laptop, audit/repair scripts under `T4_2026_ArcGIS/scripts/`, and robocopy mirror + scheduled task `Mirror_C_TEMP_to_OneDrive_TEMP` under `T4_2026_ArcGIS/automation/` — see [Docs/T4_ArcGIS_data_paths_and_TEMP_mirror.md](Docs/T4_ArcGIS_data_paths_and_TEMP_mirror.md).
 
 ---
 
@@ -48,6 +49,8 @@ Always use `carucci_r` in paths. Never use `RobertCarucci`.
 | City ordinance | `{project_root}\Data\city_ord\` |
 | Summons | `{project_root}\Data\summons\` |
 | Time reports | `{project_root}\Data\timereport\` |
+| ArcGIS paths & TEMP mirror (operator guide) | `{project_root}\Docs\T4_ArcGIS_data_paths_and_TEMP_mirror.md` |
+| T4 ArcGIS Pro project | `{project_root}\T4_2026_ArcGIS\T4_2026_ArcGIS\T4_2026_ArcGIS.aprx` |
 
 ### External Dependencies (Do Not Copy Into Project)
 
@@ -564,6 +567,15 @@ Append a Data Quality Note to every output:
 | `validate_layer_styles.py` | Validates style parity between source and target layers. |
 | `run_monthly_style_sop.py` | Single-run monthly SOP: export → apply → validate in sequence. |
 
+**Also (project maintenance, `T4_2026_ArcGIS/scripts/`):**
+
+| Script | Purpose |
+|--------|---------|
+| `audit_aprx_data_sources.py` | Exports layer/table data sources to JSON (`datasource_manifest.json`) for cross-machine comparison. |
+| `repair_aprx_data_sources.py` | Batch `updateConnectionProperties` (e.g. `C:\TEMP\...\dv_doj.gdb` → OneDrive `TEMP\...`); writes `*_repaired.aprx`. |
+
+**`C:\TEMP` → OneDrive `\TEMP` mirror:** `T4_2026_ArcGIS/automation/mirror_c_temp_to_onedrive.ps1`, optional **Task Scheduler** task `Mirror_C_TEMP_to_OneDrive_TEMP` — full detail in [Docs/T4_ArcGIS_data_paths_and_TEMP_mirror.md](Docs/T4_ArcGIS_data_paths_and_TEMP_mirror.md).
+
 **Run context:** All scripts support `CURRENT` project (ArcGIS Pro Python window) as primary; fall back to explicit APRX path for standalone execution.
 
 ### ArcGIS Online Publishing
@@ -647,7 +659,7 @@ All implementation work is tracked here. Do not mark any TODO complete until cod
 - **T4 Master workbook** — inspected 2026-04-16. `ReportName` column contains only `T4_Current`, not structured `T4_C01W02` cycle IDs. Cycle ID generation must be built into pipeline code or sourced from a separate cycle calendar. See §4a for full sheet/column inventory.
 - **DV roster actual end date** — `dv_final_enriched.csv` data ends **2025-10-29** (not 2025-12-31 as `ValidationConfig` implies). Gap is ~6 months to present. Regenerate `backfill_dv` before any T4 run.
 - **T4 Master column names use spaces** — `How Reported`, `Time of Call`, etc. — not the camelCase in the master prompt. Snake_case normalization must handle both.
-- **ArcGIS layer sources (laptop)** — `T4_2026_ArcGIS.aprx` layers point to `C:\TEMP\DV_Analysis\dv_doj.gdb\` (desktop temp path). On the laptop, the GDB exists at `Imported_from_sandbox\dv_doj_arcgis_exports\dv_incidents_arcgis_ready\dv_doj\dv_doj.gdb` but may be OneDrive online-only. Run `Scripts/t4/arcgis/reconnect_layers.py` after GDB syncs to repair. `T4 Persistent Hotspots (All Cycles)` layer is already connected via `T4_2026_ArcGIS.gdb` and is unaffected.
+- **ArcGIS layer sources (laptop)** — `T4_2026_ArcGIS.aprx` layers often point to `C:\TEMP\DV_Analysis\dv_doj.gdb\`. After mirroring `C:\TEMP` to `{OneDrive}\TEMP`, repoint with `repair_aprx_data_sources.py` / `reconnect_layers.py` to the path where `dv_doj.gdb` actually lives on that PC. Alternate copy: `Imported_from_sandbox\dv_doj_arcgis_exports\...\dv_doj.gdb` (may be online-only until synced). **`T4 Persistent Hotspots (All Cycles)`** via `T4_2026_ArcGIS.gdb` is unaffected. See [Docs/T4_ArcGIS_data_paths_and_TEMP_mirror.md](Docs/T4_ArcGIS_data_paths_and_TEMP_mirror.md).
 - **`.lyrx` export unreliable** — `ApplySymbologyFromLayer` against exported `.lyrx` returns `ERROR 000229` in this environment. Source-APRX fallback logic in `apply_layer_styles.py` is the approved workaround (validated 4/4 PASS).
 
 ---

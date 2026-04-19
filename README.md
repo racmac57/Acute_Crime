@@ -2,6 +2,8 @@
 
 Production-grade, cycle-aligned crime analysis pipeline for the Safe Streets Operations Control Center (SSOCC). Generates weighted micro-location hotspot scoring from CAD and RMS data for command staff briefings, sergeant-level tactical deployment, Power BI dashboards, and ArcGIS Pro/Online publication.
 
+**ArcGIS / machine-specific data paths:** If `T4_2026_ArcGIS.aprx` layers break on another PC (e.g. GDB under `C:\TEMP\...`), see [Docs/T4_ArcGIS_data_paths_and_TEMP_mirror.md](Docs/T4_ArcGIS_data_paths_and_TEMP_mirror.md).
+
 ---
 
 ## Purpose
@@ -91,8 +93,10 @@ Acute_Crime/
 │   ├── t4_cycle_id_strategy.md               # Closed: cycle_id from Section 0 run parameters
 │   ├── t4_config_and_aliases.md             # RMS source default + HourMinuetsCalc alias table
 │   ├── data_gaps.md                          # resolved / residual data notes
-│   └── dv_blocklist_refresh_governance.md
-└── Scripts/                                   # (optional — copy snippets from Docs/t4_config_and_aliases.md)
+│   ├── dv_blocklist_refresh_governance.md
+│   └── T4_ArcGIS_data_paths_and_TEMP_mirror.md  # APRX paths, audit/repair, C:\TEMP → OneDrive mirror
+├── T4_2026_ArcGIS/                            # ArcGIS Pro project + automation (robocopy mirror, audit/repair scripts)
+└── Scripts/                                   # T4 pipeline + Scripts/t4/arcgis/ SOP
 ```
 
 ---

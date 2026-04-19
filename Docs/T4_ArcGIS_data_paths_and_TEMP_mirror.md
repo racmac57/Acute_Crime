@@ -40,7 +40,7 @@ Scripts live in **`T4_2026_ArcGIS/scripts/`**:
 |--------|------|
 | `audit_aprx_data_sources.py` | Walks maps/layers/tables; writes `datasource_manifest.json` next to the `.aprx` (or path you pass). |
 | `repair_aprx_data_sources.py` | Applies `PATH_REPLACEMENTS` via `ArcGISProject.updateConnectionProperties`; saves `T4_2026_ArcGIS_repaired.aprx` by default. |
-| `repoint_dv_gdb_to_onedrive_temp.py` | Replaces **`C:\TEMP\DV_Analysis\dv_doj.gdb`** with **`%USERPROFILE%\OneDrive - City of Hackensack\TEMP\DV_Analysis\dv_doj.gdb`** project-wide; writes `T4_2026_ArcGIS_onedrive_temp.aprx` unless `SAVE_IN_PLACE = True` or `--save`. Requires the mirrored GDB to exist when `VALIDATE_NEW_PATH` is True. |
+| `repoint_dv_gdb_to_onedrive_temp.py` | Replaces **`C:\TEMP\DV_Analysis\dv_doj.gdb`** with **`%USERPROFILE%\OneDrive - City of Hackensack\TEMP\DV_Analysis\dv_doj.gdb`**. Uses **layer/table `connectionProperties` dict** plus **per-layer string** `updateConnectionProperties` — project-only replace can **silently no-op** if internal strings do not match. Writes `T4_2026_ArcGIS_onedrive_temp.aprx` unless `SAVE_IN_PLACE = True` or `--save`. **Open that saved `.aprx`** to verify Source; close any older Pro session so you are not viewing an unsaved in-memory project. |
 
 **Python window:** Pasting a script does **not** define `__file__`. These scripts use a **`T4_ROOT_FALLBACK`** under this repo; edit it if your clone path differs, or run the script with **Run Script** / `propy.bat` so `__file__` resolves.
 

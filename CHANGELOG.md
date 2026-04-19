@@ -8,6 +8,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Fixed (2026-04-19 — repoint script actually updates Source)
+
+- `repoint_dv_gdb_to_onedrive_temp.py` — project-level `updateConnectionProperties` can no-op; repair now uses **layer `connectionProperties` dictionary** + **per-layer string** fallback; sample database paths printed before/after
+
 ### Added (2026-04-19 — repoint DV GDB to OneDrive TEMP)
 
 - `T4_2026_ArcGIS/scripts/repoint_dv_gdb_to_onedrive_temp.py` — `ArcGISProject.updateConnectionProperties` from `C:\TEMP\DV_Analysis\dv_doj.gdb` to mirrored `...\OneDrive - City of Hackensack\TEMP\DV_Analysis\dv_doj.gdb`; default save-as `T4_2026_ArcGIS_onedrive_temp.aprx`

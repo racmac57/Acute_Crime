@@ -13,6 +13,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - [Docs/T4_ArcGIS_data_paths_and_TEMP_mirror.md](Docs/T4_ArcGIS_data_paths_and_TEMP_mirror.md) — `C:\TEMP\DV_Analysis\dv_doj.gdb` vs laptop; `audit_aprx_data_sources.py` / `repair_aprx_data_sources.py`; robocopy mirror + scheduled task `Mirror_C_TEMP_to_OneDrive_TEMP` under `T4_2026_ArcGIS/automation/`
 - [CLAUDE.md](CLAUDE.md) — §2 status, §3 paths, §20 ArcPy table, §24 laptop note updated to reference the new doc
 - [README.md](README.md) — folder tree + pointer to ArcGIS/TEMP doc
+- **`T4_2026_ArcGIS/scripts/`** + **`T4_2026_ArcGIS/automation/`** — ArcPy audit/repair + PowerShell/batch mirror scripts committed (not the `.aprx` / `.gdb` / `GpMessages` tree)
 
 ### Added (2026-04-16 — T4 scoring pipeline scripts)
 
